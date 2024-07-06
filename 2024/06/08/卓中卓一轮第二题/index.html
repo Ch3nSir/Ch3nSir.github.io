@@ -318,9 +318,13 @@
 
     <ul>
 <li><h2 id="图中是否有环"><a href="#图中是否有环" class="headerlink" title="图中是否有环"></a>图中是否有环</h2><ul>
-<li>定义一个带权无向图的数据结构如下：</li>
+<li><p>定义一个带权无向图的数据结构如下：</p>
+<hr>
+</li>
 </ul>
-<pre><code class="c">  typedef struct GraphStruct&#123;
+<pre><code>  
+
+typedef struct GraphStruct&#123;
       int   vertex_num;
     int   edge_num;
       int **edges;
@@ -329,14 +333,18 @@
   typedef unsigned int Vertex;
   
   typedef struct &#123;
-      Vertex v;
-    Vertex w;
-      int    weight;
+    Vertex v;
+  Vertex w;
+    int    weight;
 &#125; Edge;
 </code></pre>
+<hr>
 <p>  其中 edges 指向图的邻接矩阵，矩阵元素为对应边上的权重(权重为自然数)，请使用该数据结构，从标准输入读入一个图，并判断该图是否有环，如果有环，则输出yes，否则输出no。</p>
 <p>  输入数据示例如下：</p>
-<pre><code class="c">15,7
+<hr>
+<pre><code>
+
+15,7
 0,7,69
 1,10,68
 3,9,71
@@ -345,11 +353,13 @@
 4,8,6
 5,10,83
 </code></pre>
-<p>  其中第１行分别为图中结点的个数 15、图中边的个数 7；之后的7行分别是各边的信息，以第2行为例，其表示结点0和7之间有权重为69的无向边。</p>
+<hr>
+<p> 其中第１行分别为图中结点的个数 15、图中边的个数 7；之后的7行分别是各边的信息，以第2行为例，其表示结点0和7之间有权重为69的无向边。</p>
 </li>
 </ul>
 <hr>
-<pre><code>#include &lt;stdio.h&gt;
+<p>以下是个人的题解</p>
+<pre><code class="c++">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;stdbool.h&gt;
 
