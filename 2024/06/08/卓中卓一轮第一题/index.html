@@ -146,7 +146,7 @@
     </ul>
     <div class="my_foot">
         
-        <a target="_blank" rel="noopener" href="https://github.com/79E/hexo-theme-quiet">
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
             <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
         </a>
         
@@ -331,23 +331,21 @@
 </li>
 </ul>
 <p>如果 m 和 n 都找到，则输出 K，m 和 n，格式如下：</p>
-<pre><code>
+<pre class="line-numbers language-none"><code class="language-none">
 
 
-K,m,n
-</code></pre>
-</li>
+K,m,n<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 <p> 即输出的三个数用英文逗号隔开；</p>
 <p>  否则输出 -2。</p>
 <hr>
-<pre><code>#include &lt;stdio.h&gt;
+<pre class="line-numbers language-none"><code class="language-none">#include &lt;stdio.h&gt;
 #include&lt;stdlib.h&gt;
 #include &lt;stdbool.h&gt;
 bool encoded(unsigned int i) &#123;
-    for (int rotate_imm = 0; rotate_imm &lt; 16; rotate_imm++) &#123;
-        unsigned int encoded = (i &gt;&gt; (rotate_imm * 2)) | (i &lt;&lt; (32 - (rotate_imm * 2)));
-        if ((encoded &amp; 0xFFFFFF00) == 0) &#123;
+    for (int rotate_imm &#x3D; 0; rotate_imm &lt; 16; rotate_imm++) &#123;
+        unsigned int encoded &#x3D; (i &gt;&gt; (rotate_imm * 2)) | (i &lt;&lt; (32 - (rotate_imm * 2)));
+        if ((encoded &amp; 0xFFFFFF00) &#x3D;&#x3D; 0) &#123;
             return true;
         &#125;
     &#125;
@@ -355,26 +353,26 @@ bool encoded(unsigned int i) &#123;
 &#125;
 
 void find_closest_numbers(unsigned int K, unsigned int *m, unsigned int *n) &#123;
-     for (unsigned int lower = K - 1; lower &gt; 0; --lower) &#123;
+     for (unsigned int lower &#x3D; K - 1; lower &gt; 0; --lower) &#123;
             if (encoded(lower) &amp;&amp; encoded(K - lower)) &#123;
-                *m = lower;
+                *m &#x3D; lower;
                 break;
             &#125;
         &#125;
-    for (unsigned int upper = K + 1; upper &lt; 0xFFFFFFFF; ++upper) &#123;
+    for (unsigned int upper &#x3D; K + 1; upper &lt; 0xFFFFFFFF; ++upper) &#123;
             if (encoded(upper) &amp;&amp; encoded(upper - K)) &#123;
-                *n = upper;
+                *n &#x3D; upper;
                 break;
             &#125;
         &#125;
-        if(*m != -1 &amp;&amp; *n != -1)
+        if(*m !&#x3D; -1 &amp;&amp; *n !&#x3D; -1)
         return ;
   
 &#125;
 
 int main() &#123;
     unsigned int K;
-    unsigned int m = -1, n = -1;
+    unsigned int m &#x3D; -1, n &#x3D; -1;
     scanf(&quot;%u&quot;, &amp;K);
     if (encoded(K)) &#123;
         printf(&quot;-1\n&quot;);
@@ -382,14 +380,14 @@ int main() &#123;
     &#125;
     find_closest_numbers(K, &amp;m, &amp;n);
     
-    if (m != -1 &amp;&amp; n != -1)&#123;
+    if (m !&#x3D; -1 &amp;&amp; n !&#x3D; -1)&#123;
         printf(&quot;%u,%u,%u\n&quot;, K, m, n);
     &#125; else &#123;
         printf(&quot;-2\n&quot;);
     &#125;
     return 0;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
   </div>
   <div id=""></div>
@@ -477,7 +475,7 @@ Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
 	</div>
 	<div class="contact">
 		
-		<a target="_blank" rel="noopener" href="https://github.com/79E/hexo-theme-quiet">
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
 			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
 		</a>
 		

@@ -146,7 +146,7 @@
     </ul>
     <div class="my_foot">
         
-        <a target="_blank" rel="noopener" href="https://github.com/79E/hexo-theme-quiet">
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
             <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
         </a>
         
@@ -322,7 +322,7 @@
 <hr>
 </li>
 </ul>
-<pre><code>  
+<pre class="line-numbers language-none"><code class="language-none">  
 
 typedef struct GraphStruct&#123;
       int   vertex_num;
@@ -336,14 +336,14 @@ typedef struct GraphStruct&#123;
     Vertex v;
   Vertex w;
     int    weight;
-&#125; Edge;
-</code></pre>
+&#125; Edge;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <hr>
 <p>  其中 edges 指向图的邻接矩阵，矩阵元素为对应边上的权重(权重为自然数)，请使用该数据结构，从标准输入读入一个图，并判断该图是否有环，如果有环，则输出yes，否则输出no。</p>
 <p>  输入数据示例如下：</p>
 <hr>
-<pre><code>
-
+  <pre class="line-numbers language-none"><code class="language-none">
+  
 15,7
 0,7,69
 1,10,68
@@ -351,15 +351,15 @@ typedef struct GraphStruct&#123;
 3,12,92
 4,6,71
 4,8,6
-5,10,83
-</code></pre>
+5,10,83<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <hr>
 <p> 其中第１行分别为图中结点的个数 15、图中边的个数 7；之后的7行分别是各边的信息，以第2行为例，其表示结点0和7之间有权重为69的无向边。</p>
 </li>
 </ul>
 <hr>
 <p>以下是个人的题解</p>
-<pre><code class="c++">#include &lt;stdio.h&gt;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;stdbool.h&gt;
 
@@ -374,25 +374,25 @@ typedef unsigned int Vertex;
 
 
 Graph create_graph(int vertex_num, int edge_num) &#123;
-    Graph g = (Graph)malloc(sizeof(GraphStruct));
-    g-&gt;vertex_num = vertex_num;
-    g-&gt;edge_num = edge_num;
-    g-&gt;edges = (int **)malloc(vertex_num * sizeof(int *));
-    for (int i = 0; i &lt; vertex_num; i++) &#123;
-        g-&gt;edges[i] = (int *)calloc(vertex_num,sizeof(int));
+    Graph g &#x3D; (Graph)malloc(sizeof(GraphStruct));
+    g-&gt;vertex_num &#x3D; vertex_num;
+    g-&gt;edge_num &#x3D; edge_num;
+    g-&gt;edges &#x3D; (int **)malloc(vertex_num * sizeof(int *));
+    for (int i &#x3D; 0; i &lt; vertex_num; i++) &#123;
+        g-&gt;edges[i] &#x3D; (int *)calloc(vertex_num,sizeof(int));
     &#125;
     return g;
 &#125;
 
 bool dfs(Graph g, Vertex v, bool visited[], int parent) &#123;
-    visited[v] = true;
-    for (int w = 0; w &lt; g-&gt;vertex_num; w++) &#123;
-        if (g-&gt;edges[v][w] != 0) &#123; 
+    visited[v] &#x3D; true;
+    for (int w &#x3D; 0; w &lt; g-&gt;vertex_num; w++) &#123;
+        if (g-&gt;edges[v][w] !&#x3D; 0) &#123; 
             if (!visited[w]) &#123;
                 if (dfs(g, w, visited, v)) &#123;
                     return true;
                 &#125;
-            &#125; else if (w != parent) &#123;
+            &#125; else if (w !&#x3D; parent) &#123;
                 return true; 
             &#125;
         &#125;
@@ -401,9 +401,9 @@ bool dfs(Graph g, Vertex v, bool visited[], int parent) &#123;
 &#125;
 
 bool has_cycle(Graph g) &#123;
-    bool *visited = (bool *)calloc(g-&gt;vertex_num, sizeof(bool));
-    if (visited == NULL) return false;
-    for (int v = 0; v &lt; g-&gt;vertex_num; v++) &#123;
+    bool *visited &#x3D; (bool *)calloc(g-&gt;vertex_num, sizeof(bool));
+    if (visited &#x3D;&#x3D; NULL) return false;
+    for (int v &#x3D; 0; v &lt; g-&gt;vertex_num; v++) &#123;
         if (!visited[v]) &#123;
             if (dfs(g, v, visited, -1)) &#123;
                 free(visited);
@@ -418,18 +418,18 @@ bool has_cycle(Graph g) &#123;
 int main() &#123;
     int vertex_num, edge_num;
     scanf(&quot;%d,%d&quot;, &amp;vertex_num, &amp;edge_num);
-    if (vertex_num &lt;= 0 || edge_num &lt;= 0) &#123;
+    if (vertex_num &lt;&#x3D; 0 || edge_num &lt;&#x3D; 0) &#123;
         printf(&quot;no&quot;);
         return 0;&#125;
-    Graph g = create_graph(vertex_num, edge_num);
+    Graph g &#x3D; create_graph(vertex_num, edge_num);
 
-    for (int i = 0; i &lt; edge_num; i++) &#123;
+    for (int i &#x3D; 0; i &lt; edge_num; i++) &#123;
         Vertex v, w;
         int weight;
         scanf(&quot;%u,%u,%d&quot;, &amp;v, &amp;w, &amp;weight);
-        if (v &gt;= vertex_num || w &gt;= vertex_num) return 0;
-        g-&gt;edges[v][w] = weight;
-        g-&gt;edges[w][v] = weight;
+        if (v &gt;&#x3D; vertex_num || w &gt;&#x3D; vertex_num) return 0;
+        g-&gt;edges[v][w] &#x3D; weight;
+        g-&gt;edges[w][v] &#x3D; weight;
     &#125;
 
     if (has_cycle(g)) &#123;
@@ -438,8 +438,8 @@ int main() &#123;
         printf(&quot;no\n&quot;);
     &#125;
     return 0;
-&#125;
-</code></pre>
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
   </div>
   <div id=""></div>
@@ -527,7 +527,7 @@ Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
 	</div>
 	<div class="contact">
 		
-		<a target="_blank" rel="noopener" href="https://github.com/79E/hexo-theme-quiet">
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
 			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
 		</a>
 		

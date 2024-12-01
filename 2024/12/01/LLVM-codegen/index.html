@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>LLVM-codegen-ChenSir's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="UESTC,">
+<meta name="description" content="卓中卓">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.initHighlightingOnLoad();</script>
+
+	<meta name="generator" content="Hexo 6.2.0"></head>
+
+	<body>
+		
+	<div class="header">
+		<div class="header-top" id="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										HOME
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										ARCHIVE
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										CATEGORIES
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										TAGS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										LINKS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										ABOUT
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>ChenSir</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">HOME</a>
+        </li>
+        
+        <li>
+            <a href="/archives">ARCHIVE</a>
+        </li>
+        
+        <li>
+            <a href="/categories">CATEGORIES</a>
+        </li>
+        
+        <li>
+            <a href="/tags">TAGS</a>
+        </li>
+        
+        <li>
+            <a href="/links">LINKS</a>
+        </li>
+        
+        <li>
+            <a href="/about">ABOUT</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					width: "66%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					width: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/UESTC">UESTC</a></li>
+            
+            
+        </ul>
+        
+        <h1>LLVM-codegen</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">ChenSir</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/UESTC/" target="_blank" >UESTC</a>
+                    
+                </div>
+                <p>2024-12-01 13:14:00</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h2 id="3-Kaleidoscope：代码生成到-LLVM-IR"><a href="#3-Kaleidoscope：代码生成到-LLVM-IR" class="headerlink" title="3. Kaleidoscope：代码生成到 LLVM IR"></a>3. Kaleidoscope：代码生成到 LLVM IR</h2><ul>
+<li><p>第3章介绍</p>
+</li>
+<li><p>代码生成设置</p>
+</li>
+<li><p>表达式代码生成</p>
+</li>
+<li><p>函数代码生成</p>
+</li>
+<li><p>驱动更改和结束语</p>
+</li>
+<li><p>完整代码列表</p>
+</li>
+</ul>
+<h3 id="3-1-第3章介绍"><a href="#3-1-第3章介绍" class="headerlink" title="3.1. 第3章介绍"></a>3.1. 第3章介绍</h3><p>欢迎来到“用 LLVM 实现语言”教程的第3章。本章将展示如何将第2章构建的抽象语法树转换成 LLVM IR。这将让你对 LLVM 的工作方式有所了解，并展示使用 LLVM 是多么简单。构建词法分析器和解析器比生成 LLVM IR 代码要复杂得多。</p>
+<p><strong>请注意</strong>：本章及后续章节的代码需要 LLVM 3.7 或更高版本。LLVM 3.6 及更早版本将无法使用。同样请注意，你需要使用与你的 LLVM 版本相匹配的教程文档：如果你使用的是官方 LLVM 发布版，请使用随你的发布版或在 llvm.org 发布页面上包含的文档版本。</p>
+<h3 id="3-2-代码生成设置"><a href="#3-2-代码生成设置" class="headerlink" title="3.2. 代码生成设置"></a>3.2. 代码生成设置</h3><p>为了生成 LLVM IR，我们希望有一个简单的设置来开始。首先，我们在每个 AST 类中定义虚拟的代码生成（codegen）方法：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">/// ExprAST - 所有表达式节点的基类。</span>
+<span class="token keyword">class</span> <span class="token class-name">ExprAST</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">ExprAST</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
+  <span class="token keyword">virtual</span> Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// NumberExprAST - 用于表示数字字面量的表达式类，如 "1.0"。</span>
+<span class="token keyword">class</span> <span class="token class-name">NumberExprAST</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ExprAST</span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">double</span> Val<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">NumberExprAST</span><span class="token punctuation">(</span><span class="token keyword">double</span> Val<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Val</span><span class="token punctuation">(</span>Val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+  Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>codegen() 方法表示为该 AST 节点及其所有依赖项生成 IR，并返回一个 LLVM Value 对象。“Value”是 LLVM 中用于表示“静态单赋值（SSA）寄存器”或“SSA 值”的类。SSA 值最显著的特点是它们的值在相关指令执行时计算，并且在指令重新执行之前（如果重新执行）不会获得新值。换句话说，没有办法“改变”一个 SSA 值。有关更多信息，请阅读有关静态单赋值的文章 - 一旦你理解了它们，这些概念是非常自然的。</p>
+<p>注意，除了向 ExprAST 类层次结构添加虚拟方法外，使用访问者模式或其他方式来建模也是有意义的。再次强调，本教程不会深入讨论良好的软件工程实践：对于我们的目的而言，添加一个虚拟方法是最简单的。</p>
+<p>我们想要的第二件事是一个类似于我们用于解析器的“LogError”方法，它将用于报告代码生成期间发现的错误（例如，使用未声明的参数）：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>LLVMContext<span class="token operator">></span> TheContext<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>IRBuilder<span class="token operator">&lt;</span><span class="token operator">>></span> Builder<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>Module<span class="token operator">></span> TheModule<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> Value <span class="token operator">*</span><span class="token operator">></span> NamedValues<span class="token punctuation">;</span>
+
+Value <span class="token operator">*</span><span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>Str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">LogError</span><span class="token punctuation">(</span>Str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这些静态变量将在代码生成期间使用。<code>TheContext</code> 是一个不透明的对象，它拥有许多核心 LLVM 数据结构，例如类型和常量值表。我们不需要详细了解它，我们只需要一个实例来传递给需要它的 API。</p>
+<p><code>Builder</code> 对象是一个辅助对象，它使得生成 LLVM 指令变得容易。<code>IRBuilder</code> 类模板的实例会跟踪当前插入指令的位置，并具有创建新指令的方法。</p>
+<p><code>TheModule</code> 是一个 LLVM 结构，包含函数和全局变量。在许多方面，它是 LLVM IR 用于包含代码的顶级结构。它将拥有我们生成的所有 IR 的内存，这就是为什么 codegen() 方法返回一个原始的 Value*，而不是 unique_ptr<Value> 的原因。</p>
+<p><code>NamedValues</code> 映射表跟踪当前作用域中定义的哪些值以及它们的 LLVM 表示是什么。（换句话说，它是代码的符号表）。在 Kaleidoscope 的这种形式中，唯一可以引用的是函数参数。因此，在为其函数体生成代码时，函数参数将在该映射表中。</p>
+<p>有了这些基础知识，我们可以开始讨论如何为每个表达式生成代码。请注意，这假设 <code>Builder</code> 已经被设置为生成代码到某个地方。现在，我们将假设这已经完成，我们只会使用它来发出代码。</p>
+<h3 id="3-3-表达式代码生成"><a href="#3-3-表达式代码生成" class="headerlink" title="3.3. 表达式代码生成"></a>3.3. 表达式代码生成</h3><p>为表达式节点生成 LLVM 代码是非常直接的：不到 45 行注释代码涵盖了所有四个表达式节点。首先，我们处理数字字面量：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Value <span class="token operator">*</span><span class="token class-name">NumberExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token class-name">ConstantFP</span><span class="token double-colon punctuation">::</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">,</span> <span class="token function">APFloat</span><span class="token punctuation">(</span>Val<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>在 LLVM IR 中，数字常量由 <code>ConstantFP</code> 类表示，该类在内部使用 <code>APFloat</code> 持有数值（<code>APFloat</code> 能够持有任意精度的浮点常量）。这段代码基本上只是创建并返回一个 <code>ConstantFP</code>。请注意，在 LLVM IR 中，常量都是唯一的，并且共享的。因此，API 使用“foo::get(…)”习惯用法而不是“new foo(…)”或“foo::Create(…)”。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Value <span class="token operator">*</span><span class="token class-name">VariableExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 在函数中查找此变量。</span>
+  Value <span class="token operator">*</span>V <span class="token operator">=</span> NamedValues<span class="token punctuation">[</span>Name<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>V<span class="token punctuation">)</span>
+    <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Unknown variable name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> V<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用 LLVM 引用变量也非常简单。在 Kaleidoscope 的简单版本中，我们假设变量已经在某个地方发出，其值是可用的。实际上，<code>NamedValues</code> 映射表中唯一可以有的值是函数参数。这段代码简单地检查指定名称是否在映射表中（如果没有，就是引用了一个未知变量）并返回它的值。在后续章节中，我们将添加对循环计数器变量和局部变量的支持。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Value <span class="token operator">*</span><span class="token class-name">BinaryExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  Value <span class="token operator">*</span>L <span class="token operator">=</span> LHS<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Value <span class="token operator">*</span>R <span class="token operator">=</span> RHS<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>L <span class="token operator">||</span> <span class="token operator">!</span>R<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>Op<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">case</span> <span class="token char">'+'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFAdd</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"addtmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'-'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFSub</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"subtmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'*'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFMul</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"multmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'&lt;'</span><span class="token operator">:</span>
+    L <span class="token operator">=</span> Builder<span class="token operator">-></span><span class="token function">CreateFCmpULT</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"cmptmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 将布尔值 0/1 转换为双精度 0.0 或 1.0</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateUIToFP</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> <span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"booltmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"invalid binary operator"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>二元运算符开始变得更有趣。这里的基本思想是递归地发出表达式左侧的代码，然后是右侧的代码，然后计算二元表达式的结果。在这段代码中，我们对操作码做一个简单的 switch 来创建正确的 LLVM 指令。</p>
+<p>在上面的例子中，LLVM 构建器类开始显示它的价值。<code>IRBuilder</code> 知道在哪里插入新创建的指令，你只需要指定要创建的指令是什么（例如，<code>CreateFAdd</code>），使用哪些操作数（这里使用 <code>L</code> 和 <code>R</code>），并为生成的指令提供一个可选的名称。</p>
+<p>关于 LLVM 的一个好处是，名称只是一个提示。例如，如果上面的代码多次发出“addtmp”变量，LLVM 将自动为每一个提供一个递增的唯一数字后缀。指令的局部值名称完全是可选的，但它使阅读 IR 转储变得容易得多。</p>
+<p>LLVM 指令受到严格规则的约束：例如，add 指令的左右操作数必须具有相同的类型，add 的结果类型必须与操作数类型匹配。由于 Kaleidoscope 中的所有值都是双精度的，这使得 add、sub 和 mul 的代码非常简单。</p>
+<p>另一方面，LLVM 规定 fcmp 指令总是返回一个‘i1’值（一个位整数）。问题是 Kaleidoscope 希望值是 0.0 或 1.0。为了获得这些语义，我们将 fcmp 指令与 uitofp 指令结合起来。这个指令通过将输入视为无符号值，将其输入整数转换为浮点值。相比之下，如果我们使用 sitofp 指令，Kaleidoscope 的‘&lt;’操作符将根据输入值返回 0.0 和 -1.0。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Value <span class="token operator">*</span><span class="token class-name">CallExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 在全局模块表中查找名称。</span>
+  Function <span class="token operator">*</span>CalleeF <span class="token operator">=</span> TheModule<span class="token operator">-></span><span class="token function">getFunction</span><span class="token punctuation">(</span>Callee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>CalleeF<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Unknown function referenced"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 如果参数不匹配错误。</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CalleeF<span class="token operator">-></span><span class="token function">arg_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Incorrect # arguments passed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Value <span class="token operator">*</span><span class="token operator">></span> ArgsV<span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> e <span class="token operator">=</span> Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> e<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ArgsV<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>Args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ArgsV<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateCall</span><span class="token punctuation">(</span>CalleeF<span class="token punctuation">,</span> ArgsV<span class="token punctuation">,</span> <span class="token string">"calltmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用 LLVM 生成函数调用代码是相当直接的。上面的代码最初在 LLVM 模块的符号表中进行函数名称查找。回想一下，LLVM 模块是包含我们正在 JIT 的函数的容器。通过为每个函数提供与用户指定的相同名称，我们可以使用 LLVM 符号表为我们解析函数名称。</p>
+<p>一旦我们有了要调用的函数，我们就递归地为要传递的每个参数生成代码，并创建一个 LLVM call 指令。请注意，默认情况下 LLVM 使用本地 C 调用约定，这允许这些调用也调用标准库函数，如“sin”和“cos”，无需额外努力。</p>
+<h3 id="3-4-函数代码生成"><a href="#3-4-函数代码生成" class="headerlink" title="3.4. 函数代码生成"></a>3.4. 函数代码生成</h3><p>原型和函数的代码生成必须处理许多细节，这使得它们的代码不如表达式代码生成那么美观，但它允许我们说明一些重要的观点。首先，让我们谈谈原型的代码生成：它们既用于函数体，也用于外部函数声明。代码从以下开始：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Function <span class="token operator">*</span><span class="token class-name">PrototypeAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 制作函数类型：double(double,double)等。</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Type<span class="token operator">*</span><span class="token operator">></span> <span class="token function">Doubles</span><span class="token punctuation">(</span>Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  FunctionType <span class="token operator">*</span>FT <span class="token operator">=</span> <span class="token class-name">FunctionType</span><span class="token double-colon punctuation">::</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">,</span> Doubles<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Function <span class="token operator">*</span>F <span class="token operator">=</span> <span class="token class-name">Function</span><span class="token double-colon punctuation">::</span><span class="token function">Create</span><span class="token punctuation">(</span>FT<span class="token punctuation">,</span> Function<span class="token double-colon punctuation">::</span>ExternalLinkage<span class="token punctuation">,</span> Name<span class="token punctuation">,</span> TheModule<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这段代码包含了大量的功能。首先，这个函数返回一个“Function<em>”而不是一个“Value</em>”。因为“原型”实际上讨论的是函数的外部接口（而不是由表达式计算的值），所以它在代码生成时返回对应的 LLVM 函数是有意义的。</p>
+<p>对 <code>FunctionType::get</code> 的调用创建了给定原型应该使用的 <code>FunctionType</code>。由于 Kaleidoscope 中的所有函数参数都是 double 类型，第一行创建了一个“N”个 LLVM double 类型的向量。然后使用 <code>FunctionType::get</code> 方法创建一个接受“N”个 double 作为参数，返回一个 double 结果的函数类型，并且不是变长参数（false 参数表示这一点）。请注意，LLVM 中的类型就像常量一样是唯一的，所以你不会“new”一个类型，你会“get”它。</p>
+<p>上面的最后一行实际上创建了对应于原型的 IR 函数。这表明了要使用的类型、链接方式和名称，以及要插入哪个模块。“external linkage”意味着该函数可能在当前模块之外定义，并且&#x2F;或者它可以被模块之外的函数调用。传入的名称是用户指定的名称：由于指定了“<code>TheModule</code>”，这个名称在“<code>TheModule</code>”的符号表中注册。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 为所有参数设置名称。</span>
+<span class="token keyword">unsigned</span> Idx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>Arg <span class="token operator">:</span> F<span class="token operator">-></span><span class="token function">args</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  Arg<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>Args<span class="token punctuation">[</span>Idx<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">return</span> F<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后，我们根据原型中给出的名称为每个函数参数设置名称。这一步不是绝对必要的，但保持名称一致使得 IR 更易读，并且允许后续代码直接引用参数的名称，而不是在原型 AST 中查找它们。</p>
+<p>此时，我们有一个没有主体的函数原型。这就是 LLVM IR 表示函数声明的方式。对于 Kaleidoscope 中的 extern 语句，我们需要走到这一步。对于函数定义，我们需要代码生成并附加一个函数体。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">Function <span class="token operator">*</span><span class="token class-name">FunctionAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 首先，检查之前是否有使用 'extern' 声明的现有函数。</span>
+  Function <span class="token operator">*</span>TheFunction <span class="token operator">=</span> TheModule<span class="token operator">-></span><span class="token function">getFunction</span><span class="token punctuation">(</span>Proto<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>TheFunction<span class="token punctuation">)</span>
+    TheFunction <span class="token operator">=</span> Proto<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>TheFunction<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>TheFunction<span class="token operator">-></span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>Function<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Function cannot be redefined."</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对于函数定义，我们首先在 TheModule 的符号表中搜索这个函数的现有版本，以防已经使用 ‘extern’ 语句创建过。如果 Module::getFunction 返回 null，则表示之前没有版本存在，所以我们将从原型生成一个。无论哪种情况，我们都希望在开始之前断言函数是空的（即，还没有主体）。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// 创建一个新的基本块以开始插入。</span>
+BasicBlock <span class="token operator">*</span>BB <span class="token operator">=</span> <span class="token class-name">BasicBlock</span><span class="token double-colon punctuation">::</span><span class="token function">Create</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">,</span> <span class="token string">"entry"</span><span class="token punctuation">,</span> TheFunction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Builder<span class="token operator">-></span><span class="token function">SetInsertPoint</span><span class="token punctuation">(</span>BB<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 在 NamedValues 映射中记录函数参数。</span>
+NamedValues<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>Arg <span class="token operator">:</span> TheFunction<span class="token operator">-></span><span class="token function">args</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  NamedValues<span class="token punctuation">[</span>std<span class="token double-colon punctuation">::</span><span class="token function">string</span><span class="token punctuation">(</span>Arg<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>Arg<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>现在我们到了设置 <code>Builder</code> 的地方。第一行创建了一个新的基本块（命名为 “entry”），它被插入到 <code>TheFunction</code> 中。第二行然后告诉构建器新指令应该插入到新基本块的末尾。LLVM 中的基本块是定义控制流图的重要部分。由于我们没有任何控制流，我们的功能目前将只包含一个块。我们将在第5章修复这个问题。</p>
+<p>接下来，我们在 NamedValues 映射中添加函数参数（首先清除它），以便它们可以被 <code>VariableExprAST</code> 节点访问。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span> <span class="token punctuation">(</span>Value <span class="token operator">*</span>RetVal <span class="token operator">=</span> Body<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// 完成函数。</span>
+  Builder<span class="token operator">-></span><span class="token function">CreateRet</span><span class="token punctuation">(</span>RetVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 验证生成的代码，检查一致性。</span>
+  <span class="token function">verifyFunction</span><span class="token punctuation">(</span><span class="token operator">*</span>TheFunction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> TheFunction<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一旦插入点设置好并且 NamedValues 映射填充好，我们调用函数根表达式的 <code>codegen()</code> 方法。如果没有错误发生，这将发出代码以计算表达式到入口块并返回计算的值。假设没有错误，我们然后创建一个 LLVM ret 指令，这完成了函数。一旦函数构建完成并通过验证，我们返回它。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">  <span class="token comment">// 读取主体时出错，删除函数。</span>
+  TheFunction<span class="token operator">-></span><span class="token function">eraseFromParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里剩下的部分是错误处理。为了简单起见，我们通过使用 <code>eraseFromParent</code> 方法删除我们生成的函数来处理这个问题。这允许用户重新定义他们之前错误输入的函数：如果我们不删除它，它将以一个主体存在于符号表中，阻止未来的重新定义。</p>
+<p>这段代码确实有一个错误：如果 <code>FunctionAST::codegen()</code> 方法找到了一个现有的 IR 函数，它不会验证其签名与定义自己的原型是否匹配。这意味着早期的 ‘extern’ 声明将优先于函数定义的签名，这可能导致 codegen 失败，例如，如果函数参数的名称不同。有多种方法可以修复这个错误，看看你能想到什么！这里有一个测试用例：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">extern</span> <span class="token function">foo</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>     # 好的，定义了 foo。
+def <span class="token function">foo</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> b<span class="token punctuation">;</span>      # 错误：未知变量名称。（使用 <span class="token char">'a'</span> 的声明优先）。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3 id="3-5-驱动更改和结束语"><a href="#3-5-驱动更改和结束语" class="headerlink" title="3.5. 驱动更改和结束语"></a>3.5. 驱动更改和结束语</h3><p>目前，代码生成到 LLVM 并没有给我们带来太多好处，除了我们可以查看漂亮的 IR 调用。示例代码将 codegen 调用插入到 “HandleDefinition”、“HandleExtern” 等函数中，然后转储出 LLVM IR。这为查看简单函数的 LLVM IR 提供了一个很好的方式。例如：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ready<span class="token operator">></span> <span class="token number">4</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+Read top<span class="token operator">-</span>level expression<span class="token operator">:</span>
+define <span class="token keyword">double</span> @<span class="token number">0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  ret <span class="token keyword">double</span> <span class="token number">9.000000e+00</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意，解析器如何将顶层表达式转换为我们的匿名函数。当我们在下一章添加 JIT 支持时，这将非常有用。同样请注意，代码非常直接地转录，除了 IRBuilder 完成的简单常量折叠外，没有执行任何优化。我们将在下一章显式添加优化。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ready<span class="token operator">></span> def <span class="token function">foo</span><span class="token punctuation">(</span>a b<span class="token punctuation">)</span> a<span class="token operator">*</span>a <span class="token operator">+</span> <span class="token number">2</span><span class="token operator">*</span>a<span class="token operator">*</span>b <span class="token operator">+</span> b<span class="token operator">*</span>b<span class="token punctuation">;</span>
+Read function definition<span class="token operator">:</span>
+define <span class="token keyword">double</span> @<span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token keyword">double</span> <span class="token operator">%</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>multmp <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token operator">%</span>a
+  <span class="token operator">%</span>multmp1 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token number">2.000000e+00</span><span class="token punctuation">,</span> <span class="token operator">%</span>a
+  <span class="token operator">%</span>multmp2 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>multmp1<span class="token punctuation">,</span> <span class="token operator">%</span>b
+  <span class="token operator">%</span>addtmp <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>multmp<span class="token punctuation">,</span> <span class="token operator">%</span>multmp2
+  <span class="token operator">%</span>multmp3 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>b<span class="token punctuation">,</span> <span class="token operator">%</span>b
+  <span class="token operator">%</span>addtmp4 <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>addtmp<span class="token punctuation">,</span> <span class="token operator">%</span>multmp3
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>addtmp4
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这显示了一些简单的算术。注意与我们用来创建指令的 LLVM 构建器调用的惊人相似性。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ready<span class="token operator">></span> def <span class="token function">bar</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token function">foo</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token number">31337</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Read function definition<span class="token operator">:</span>
+define <span class="token keyword">double</span> @<span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>calltmp <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token keyword">double</span> <span class="token number">4.000000e+00</span><span class="token punctuation">)</span>
+  <span class="token operator">%</span>calltmp1 <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token number">3.133700e+04</span><span class="token punctuation">)</span>
+  <span class="token operator">%</span>addtmp <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>calltmp<span class="token punctuation">,</span> <span class="token operator">%</span>calltmp1
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>addtmp
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这显示了一些函数调用。请注意，如果你调用这个函数，它将需要很长时间才能执行。将来我们将添加条件控制流，使递归真正有用。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ready<span class="token operator">></span> <span class="token keyword">extern</span> <span class="token function">cos</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Read <span class="token keyword">extern</span><span class="token operator">:</span>
+declare <span class="token keyword">double</span> @<span class="token function">cos</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>
+
+ready<span class="token operator">></span> <span class="token function">cos</span><span class="token punctuation">(</span><span class="token number">1.234</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Read top<span class="token operator">-</span>level expression<span class="token operator">:</span>
+define <span class="token keyword">double</span> @<span class="token number">1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>calltmp <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">cos</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token number">1.234000e+00</span><span class="token punctuation">)</span>
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>calltmp
+      <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这显示了对 libm “cos”函数的 extern，以及对其的调用。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ready<span class="token operator">></span> <span class="token operator">^</span>D
+<span class="token punctuation">;</span> ModuleID <span class="token operator">=</span> <span class="token char">'my cool jit'</span>
+
+define <span class="token keyword">double</span> @<span class="token number">0</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>addtmp <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token number">4.000000e+00</span><span class="token punctuation">,</span> <span class="token number">5.000000e+00</span>
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>addtmp
+<span class="token punctuation">&#125;</span>
+
+define <span class="token keyword">double</span> @<span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token keyword">double</span> <span class="token operator">%</span>b<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>multmp <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token operator">%</span>a
+  <span class="token operator">%</span>multmp1 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token number">2.000000e+00</span><span class="token punctuation">,</span> <span class="token operator">%</span>a
+  <span class="token operator">%</span>multmp2 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>multmp1<span class="token punctuation">,</span> <span class="token operator">%</span>b
+  <span class="token operator">%</span>addtmp <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>multmp<span class="token punctuation">,</span> <span class="token operator">%</span>multmp2
+  <span class="token operator">%</span>multmp3 <span class="token operator">=</span> fmul <span class="token keyword">double</span> <span class="token operator">%</span>b<span class="token punctuation">,</span> <span class="token operator">%</span>b
+  <span class="token operator">%</span>addtmp4 <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>addtmp<span class="token punctuation">,</span> <span class="token operator">%</span>multmp3
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>addtmp4
+<span class="token punctuation">&#125;</span>
+
+define <span class="token keyword">double</span> @<span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>calltmp <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">%</span>a<span class="token punctuation">,</span> <span class="token keyword">double</span> <span class="token number">4.000000e+00</span><span class="token punctuation">)</span>
+  <span class="token operator">%</span>calltmp1 <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token number">3.133700e+04</span><span class="token punctuation">)</span>
+  <span class="token operator">%</span>addtmp <span class="token operator">=</span> fadd <span class="token keyword">double</span> <span class="token operator">%</span>calltmp<span class="token punctuation">,</span> <span class="token operator">%</span>calltmp1
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>addtmp
+<span class="token punctuation">&#125;</span>
+
+declare <span class="token keyword">double</span> @<span class="token function">cos</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span>
+
+define <span class="token keyword">double</span> @<span class="token number">1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+entry<span class="token operator">:</span>
+  <span class="token operator">%</span>calltmp <span class="token operator">=</span> call <span class="token keyword">double</span> @<span class="token function">cos</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token number">1.234000e+00</span><span class="token punctuation">)</span>
+  ret <span class="token keyword">double</span> <span class="token operator">%</span>calltmp
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当你退出当前演示（通过在 Linux 上发送 EOF，或在 Windows 上发送 CTRL+Z 和 ENTER），它会转储出整个模块生成的 IR。在这里，你可以看到所有函数相互引用的大局。</p>
+<p>这结束了 Kaleidoscope 教程的第三章。接下来，我们将描述如何添加 JIT 代码生成和优化器支持，以便我们实际上可以开始运行代码！</p>
+<h3 id="3-6-完整代码列表"><a href="#3-6-完整代码列表" class="headerlink" title="3.6. 完整代码列表"></a>3.6. 完整代码列表</h3><p>以下是我们运行示例的完整代码列表，增强了 LLVM 代码生成器。因为这使用了 LLVM 库，我们需要将它们链接进来。为此，我们使用 <code>llvm-config</code> 工具来告知我们的 makefile&#x2F;command line 使用哪些选项：</p>
+<pre class="line-numbers language-none"><code class="language-none">bash
+# 编译
+clang++ -g -O3 toy.cpp &#96;llvm-config --cxxflags --ldflags --system-libs --libs core&#96; -o toy
+# 运行
+.&#x2F;toy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>以下是代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/ADT/APFloat.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/ADT/STLExtras.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/BasicBlock.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/Constants.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/DerivedTypes.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/Function.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/IRBuilder.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/LLVMContext.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/Module.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/Type.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"llvm/IR/Verifier.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;algorithm></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cctype></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdlib></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;map></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;memory></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> llvm<span class="token punctuation">;</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Lexer</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token comment">// The lexer returns tokens [0-255] if it is an unknown character, otherwise one</span>
+<span class="token comment">// of these for known things.</span>
+<span class="token keyword">enum</span> <span class="token class-name">Token</span> <span class="token punctuation">&#123;</span>
+  tok_eof <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// commands</span>
+  tok_def <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span>
+  tok_extern <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span>
+
+  <span class="token comment">// primary</span>
+  tok_identifier <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span>
+  tok_number <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">5</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>string IdentifierStr<span class="token punctuation">;</span> <span class="token comment">// Filled in if tok_identifier</span>
+<span class="token keyword">static</span> <span class="token keyword">double</span> NumVal<span class="token punctuation">;</span>             <span class="token comment">// Filled in if tok_number</span>
+
+<span class="token comment">/// gettok - Return the next token from standard input.</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">gettok</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">static</span> <span class="token keyword">int</span> LastChar <span class="token operator">=</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Skip any whitespace.</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isspace</span><span class="token punctuation">(</span>LastChar<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    LastChar <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isalpha</span><span class="token punctuation">(</span>LastChar<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// identifier: [a-zA-Z][a-zA-Z0-9]*</span>
+    IdentifierStr <span class="token operator">=</span> LastChar<span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isalnum</span><span class="token punctuation">(</span><span class="token punctuation">(</span>LastChar <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      IdentifierStr <span class="token operator">+=</span> LastChar<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>IdentifierStr <span class="token operator">==</span> <span class="token string">"def"</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> tok_def<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>IdentifierStr <span class="token operator">==</span> <span class="token string">"extern"</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> tok_extern<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tok_identifier<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isdigit</span><span class="token punctuation">(</span>LastChar<span class="token punctuation">)</span> <span class="token operator">||</span> LastChar <span class="token operator">==</span> <span class="token char">'.'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// Number: [0-9.]+</span>
+    std<span class="token double-colon punctuation">::</span>string NumStr<span class="token punctuation">;</span>
+    <span class="token keyword">do</span> <span class="token punctuation">&#123;</span>
+      NumStr <span class="token operator">+=</span> LastChar<span class="token punctuation">;</span>
+      LastChar <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">isdigit</span><span class="token punctuation">(</span>LastChar<span class="token punctuation">)</span> <span class="token operator">||</span> LastChar <span class="token operator">==</span> <span class="token char">'.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    NumVal <span class="token operator">=</span> <span class="token function">strtod</span><span class="token punctuation">(</span>NumStr<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> tok_number<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>LastChar <span class="token operator">==</span> <span class="token char">'#'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Comment until end of line.</span>
+    <span class="token keyword">do</span>
+      LastChar <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>LastChar <span class="token operator">!=</span> <span class="token constant">EOF</span> <span class="token operator">&amp;&amp;</span> LastChar <span class="token operator">!=</span> <span class="token char">'\n'</span> <span class="token operator">&amp;&amp;</span> LastChar <span class="token operator">!=</span> <span class="token char">'\r'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>LastChar <span class="token operator">!=</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token function">gettok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// Check for end of file.  Don't eat the EOF.</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>LastChar <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> tok_eof<span class="token punctuation">;</span>
+
+  <span class="token comment">// Otherwise, just return the character as its ascii value.</span>
+  <span class="token keyword">int</span> ThisChar <span class="token operator">=</span> LastChar<span class="token punctuation">;</span>
+  LastChar <span class="token operator">=</span> <span class="token function">getchar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ThisChar<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Abstract Syntax Tree (aka Parse Tree)</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token keyword">namespace</span> <span class="token punctuation">&#123;</span>
+
+<span class="token comment">/// ExprAST - Base class for all expression nodes.</span>
+<span class="token keyword">class</span> <span class="token class-name">ExprAST</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">ExprAST</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">virtual</span> Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// NumberExprAST - Expression class for numeric literals like "1.0".</span>
+<span class="token keyword">class</span> <span class="token class-name">NumberExprAST</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ExprAST</span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">double</span> Val<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">NumberExprAST</span><span class="token punctuation">(</span><span class="token keyword">double</span> Val<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Val</span><span class="token punctuation">(</span>Val<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// VariableExprAST - Expression class for referencing a variable, like "a".</span>
+<span class="token keyword">class</span> <span class="token class-name">VariableExprAST</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ExprAST</span></span> <span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>string Name<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">VariableExprAST</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>Name<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">Name</span><span class="token punctuation">(</span>Name<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// BinaryExprAST - Expression class for a binary operator.</span>
+<span class="token keyword">class</span> <span class="token class-name">BinaryExprAST</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ExprAST</span></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">char</span> Op<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> LHS<span class="token punctuation">,</span> RHS<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">BinaryExprAST</span><span class="token punctuation">(</span><span class="token keyword">char</span> Op<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> LHS<span class="token punctuation">,</span>
+                std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> RHS<span class="token punctuation">)</span>
+      <span class="token operator">:</span> <span class="token function">Op</span><span class="token punctuation">(</span>Op<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">LHS</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>LHS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">RHS</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>RHS<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// CallExprAST - Expression class for function calls.</span>
+<span class="token keyword">class</span> <span class="token class-name">CallExprAST</span> <span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">ExprAST</span></span> <span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>string Callee<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">>></span> Args<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">CallExprAST</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>Callee<span class="token punctuation">,</span>
+              std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">>></span> Args<span class="token punctuation">)</span>
+      <span class="token operator">:</span> <span class="token function">Callee</span><span class="token punctuation">(</span>Callee<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Args</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Args<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Value <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">override</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// PrototypeAST - This class represents the "prototype" for a function,</span>
+<span class="token comment">/// which captures its name, and its argument names (thus implicitly the number</span>
+<span class="token comment">/// of arguments the function takes).</span>
+<span class="token keyword">class</span> <span class="token class-name">PrototypeAST</span> <span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>string Name<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span> Args<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">PrototypeAST</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span>Name<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span> Args<span class="token punctuation">)</span>
+      <span class="token operator">:</span> <span class="token function">Name</span><span class="token punctuation">(</span>Name<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Args</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Args<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Function <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> std<span class="token double-colon punctuation">::</span>string <span class="token operator">&amp;</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> Name<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// FunctionAST - This class represents a function definition itself.</span>
+<span class="token keyword">class</span> <span class="token class-name">FunctionAST</span> <span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span> Proto<span class="token punctuation">;</span>
+  std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> Body<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+  <span class="token function">FunctionAST</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span> Proto<span class="token punctuation">,</span>
+              std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> Body<span class="token punctuation">)</span>
+      <span class="token operator">:</span> <span class="token function">Proto</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Proto<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">Body</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Body<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  Function <span class="token operator">*</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span> <span class="token comment">// end anonymous namespace</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Parser</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token comment">/// CurTok/getNextToken - Provide a simple token buffer.  CurTok is the current</span>
+<span class="token comment">/// token the parser is looking at.  getNextToken reads another token from the</span>
+<span class="token comment">/// lexer and updates CurTok with its results.</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> CurTok<span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> CurTok <span class="token operator">=</span> <span class="token function">gettok</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// BinopPrecedence - This holds the precedence for each binary operator that is</span>
+<span class="token comment">/// defined.</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> BinopPrecedence<span class="token punctuation">;</span>
+
+<span class="token comment">/// GetTokPrecedence - Get the precedence of the pending binary operator token.</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">GetTokPrecedence</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isascii</span><span class="token punctuation">(</span>CurTok<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Make sure it's a declared binop.</span>
+  <span class="token keyword">int</span> TokPrec <span class="token operator">=</span> BinopPrecedence<span class="token punctuation">[</span>CurTok<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>TokPrec <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> TokPrec<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// LogError* - These are little helper functions for error handling.</span>
+std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">LogError</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>Str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Error: %s\n"</span><span class="token punctuation">,</span> Str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span> <span class="token function">LogErrorP</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>Str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">LogError</span><span class="token punctuation">(</span>Str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// numberexpr ::= number</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseNumberExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">auto</span> Result <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>NumberExprAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>NumVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// consume the number</span>
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// parenexpr ::= '(' expression ')'</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseParenExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat (.</span>
+  <span class="token keyword">auto</span> V <span class="token operator">=</span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>V<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">')'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogError</span><span class="token punctuation">(</span><span class="token string">"expected ')'"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat ).</span>
+  <span class="token keyword">return</span> V<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// identifierexpr</span>
+<span class="token comment">///   ::= identifier</span>
+<span class="token comment">///   ::= identifier '(' expression* ')'</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseIdentifierExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  std<span class="token double-colon punctuation">::</span>string IdName <span class="token operator">=</span> IdentifierStr<span class="token punctuation">;</span>
+
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat identifier.</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">'('</span><span class="token punctuation">)</span> <span class="token comment">// Simple variable ref.</span>
+    <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>VariableExprAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>IdName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Call.</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat (</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">>></span> Args<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">')'</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> Arg <span class="token operator">=</span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        Args<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Arg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">else</span>
+        <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">==</span> <span class="token char">')'</span><span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">','</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token function">LogError</span><span class="token punctuation">(</span><span class="token string">"Expected ')' or ',' in argument list"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// Eat the ')'.</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>CallExprAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>IdName<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Args<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// primary</span>
+<span class="token comment">///   ::= identifierexpr</span>
+<span class="token comment">///   ::= numberexpr</span>
+<span class="token comment">///   ::= parenexpr</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParsePrimary</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>CurTok<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">default</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">LogError</span><span class="token punctuation">(</span><span class="token string">"unknown token when expecting an expression"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> tok_identifier<span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">ParseIdentifierExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> tok_number<span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">ParseNumberExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'('</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">ParseParenExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// binoprhs</span>
+<span class="token comment">///   ::= ('+' primary)*</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseBinOpRHS</span><span class="token punctuation">(</span><span class="token keyword">int</span> ExprPrec<span class="token punctuation">,</span>
+                                              std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> LHS<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// If this is a binop, find its precedence.</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> TokPrec <span class="token operator">=</span> <span class="token function">GetTokPrecedence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// If this is a binop that binds at least as tightly as the current binop,</span>
+    <span class="token comment">// consume it, otherwise we are done.</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>TokPrec <span class="token operator">&lt;</span> ExprPrec<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> LHS<span class="token punctuation">;</span>
+
+    <span class="token comment">// Okay, we know this is a binop.</span>
+    <span class="token keyword">int</span> BinOp <span class="token operator">=</span> CurTok<span class="token punctuation">;</span>
+    <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat binop</span>
+
+    <span class="token comment">// Parse the primary expression after the binary operator.</span>
+    <span class="token keyword">auto</span> RHS <span class="token operator">=</span> <span class="token function">ParsePrimary</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>RHS<span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// If BinOp binds less tightly with RHS than the operator after RHS, let</span>
+    <span class="token comment">// the pending operator take RHS as its LHS.</span>
+    <span class="token keyword">int</span> NextPrec <span class="token operator">=</span> <span class="token function">GetTokPrecedence</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>TokPrec <span class="token operator">&lt;</span> NextPrec<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      RHS <span class="token operator">=</span> <span class="token function">ParseBinOpRHS</span><span class="token punctuation">(</span>TokPrec <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>RHS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>RHS<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// Merge LHS/RHS.</span>
+    LHS <span class="token operator">=</span>
+        std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>BinaryExprAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>BinOp<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>LHS<span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>RHS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// expression</span>
+<span class="token comment">///   ::= primary binoprhs</span>
+<span class="token comment">///</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>ExprAST<span class="token operator">></span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">auto</span> LHS <span class="token operator">=</span> <span class="token function">ParsePrimary</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>LHS<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token function">ParseBinOpRHS</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>LHS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// prototype</span>
+<span class="token comment">///   ::= id '(' id* ')'</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span> <span class="token function">ParsePrototype</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> tok_identifier<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorP</span><span class="token punctuation">(</span><span class="token string">"Expected function name in prototype"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  std<span class="token double-colon punctuation">::</span>string FnName <span class="token operator">=</span> IdentifierStr<span class="token punctuation">;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">'('</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorP</span><span class="token punctuation">(</span><span class="token string">"Expected '(' in prototype"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span> ArgNames<span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> tok_identifier<span class="token punctuation">)</span>
+    ArgNames<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>IdentifierStr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CurTok <span class="token operator">!=</span> <span class="token char">')'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorP</span><span class="token punctuation">(</span><span class="token string">"Expected ')' in prototype"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// success.</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat ')'.</span>
+
+  <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>FnName<span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>ArgNames<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// definition ::= 'def' prototype expression</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>FunctionAST<span class="token operator">></span> <span class="token function">ParseDefinition</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat def.</span>
+  <span class="token keyword">auto</span> Proto <span class="token operator">=</span> <span class="token function">ParsePrototype</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>Proto<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> E <span class="token operator">=</span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>FunctionAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Proto<span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>E<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// toplevelexpr ::= expression</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>FunctionAST<span class="token operator">></span> <span class="token function">ParseTopLevelExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> E <span class="token operator">=</span> <span class="token function">ParseExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Make an anonymous proto.</span>
+    <span class="token keyword">auto</span> Proto <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token string">"__anon_expr"</span><span class="token punctuation">,</span>
+                                                 std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">vector</span><span class="token generic class-name"><span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>FunctionAST<span class="token operator">></span></span></span><span class="token punctuation">(</span>std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>Proto<span class="token punctuation">)</span><span class="token punctuation">,</span> std<span class="token double-colon punctuation">::</span><span class="token function">move</span><span class="token punctuation">(</span>E<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// external ::= 'extern' prototype</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>PrototypeAST<span class="token operator">></span> <span class="token function">ParseExtern</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// eat extern.</span>
+  <span class="token keyword">return</span> <span class="token function">ParsePrototype</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Code Generation</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>LLVMContext<span class="token operator">></span> TheContext<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>Module<span class="token operator">></span> TheModule<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>unique_ptr<span class="token operator">&lt;</span>IRBuilder<span class="token operator">&lt;</span><span class="token operator">>></span> Builder<span class="token punctuation">;</span>
+<span class="token keyword">static</span> std<span class="token double-colon punctuation">::</span>map<span class="token operator">&lt;</span>std<span class="token double-colon punctuation">::</span>string<span class="token punctuation">,</span> Value <span class="token operator">*</span><span class="token operator">></span> NamedValues<span class="token punctuation">;</span>
+
+Value <span class="token operator">*</span><span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>Str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">LogError</span><span class="token punctuation">(</span>Str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+Value <span class="token operator">*</span><span class="token class-name">NumberExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token class-name">ConstantFP</span><span class="token double-colon punctuation">::</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">,</span> <span class="token function">APFloat</span><span class="token punctuation">(</span>Val<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+Value <span class="token operator">*</span><span class="token class-name">VariableExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Look this variable up in the function.</span>
+  Value <span class="token operator">*</span>V <span class="token operator">=</span> NamedValues<span class="token punctuation">[</span>Name<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>V<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Unknown variable name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> V<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+Value <span class="token operator">*</span><span class="token class-name">BinaryExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  Value <span class="token operator">*</span>L <span class="token operator">=</span> LHS<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Value <span class="token operator">*</span>R <span class="token operator">=</span> RHS<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>L <span class="token operator">||</span> <span class="token operator">!</span>R<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>Op<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">case</span> <span class="token char">'+'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFAdd</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"addtmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'-'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFSub</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"subtmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'*'</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateFMul</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"multmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">case</span> <span class="token char">'&lt;'</span><span class="token operator">:</span>
+    L <span class="token operator">=</span> Builder<span class="token operator">-></span><span class="token function">CreateFCmpULT</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> R<span class="token punctuation">,</span> <span class="token string">"cmptmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// Convert bool 0/1 to double 0.0 or 1.0</span>
+    <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateUIToFP</span><span class="token punctuation">(</span>L<span class="token punctuation">,</span> <span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"booltmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">default</span><span class="token operator">:</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"invalid binary operator"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+Value <span class="token operator">*</span><span class="token class-name">CallExprAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Look up the name in the global module table.</span>
+  Function <span class="token operator">*</span>CalleeF <span class="token operator">=</span> TheModule<span class="token operator">-></span><span class="token function">getFunction</span><span class="token punctuation">(</span>Callee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>CalleeF<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Unknown function referenced"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// If argument mismatch error.</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>CalleeF<span class="token operator">-></span><span class="token function">arg_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">LogErrorV</span><span class="token punctuation">(</span><span class="token string">"Incorrect # arguments passed"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Value <span class="token operator">*</span><span class="token operator">></span> ArgsV<span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> e <span class="token operator">=</span> Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i <span class="token operator">!=</span> e<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    ArgsV<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>Args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ArgsV<span class="token punctuation">.</span><span class="token function">back</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">return</span> Builder<span class="token operator">-></span><span class="token function">CreateCall</span><span class="token punctuation">(</span>CalleeF<span class="token punctuation">,</span> ArgsV<span class="token punctuation">,</span> <span class="token string">"calltmp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+Function <span class="token operator">*</span><span class="token class-name">PrototypeAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Make the function type:  double(double,double) etc.</span>
+  std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>Type <span class="token operator">*</span><span class="token operator">></span> <span class="token function">Doubles</span><span class="token punctuation">(</span>Args<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  FunctionType <span class="token operator">*</span>FT <span class="token operator">=</span>
+      <span class="token class-name">FunctionType</span><span class="token double-colon punctuation">::</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">Type</span><span class="token double-colon punctuation">::</span><span class="token function">getDoubleTy</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">,</span> Doubles<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  Function <span class="token operator">*</span>F <span class="token operator">=</span>
+      <span class="token class-name">Function</span><span class="token double-colon punctuation">::</span><span class="token function">Create</span><span class="token punctuation">(</span>FT<span class="token punctuation">,</span> Function<span class="token double-colon punctuation">::</span>ExternalLinkage<span class="token punctuation">,</span> Name<span class="token punctuation">,</span> TheModule<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Set names for all arguments.</span>
+  <span class="token keyword">unsigned</span> Idx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>Arg <span class="token operator">:</span> F<span class="token operator">-></span><span class="token function">args</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    Arg<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>Args<span class="token punctuation">[</span>Idx<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> F<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+Function <span class="token operator">*</span><span class="token class-name">FunctionAST</span><span class="token double-colon punctuation">::</span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// First, check for an existing function from a previous 'extern' declaration.</span>
+  Function <span class="token operator">*</span>TheFunction <span class="token operator">=</span> TheModule<span class="token operator">-></span><span class="token function">getFunction</span><span class="token punctuation">(</span>Proto<span class="token operator">-></span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>TheFunction<span class="token punctuation">)</span>
+    TheFunction <span class="token operator">=</span> Proto<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>TheFunction<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Create a new basic block to start insertion into.</span>
+  BasicBlock <span class="token operator">*</span>BB <span class="token operator">=</span> <span class="token class-name">BasicBlock</span><span class="token double-colon punctuation">::</span><span class="token function">Create</span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">,</span> <span class="token string">"entry"</span><span class="token punctuation">,</span> TheFunction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Builder<span class="token operator">-></span><span class="token function">SetInsertPoint</span><span class="token punctuation">(</span>BB<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Record the function arguments in the NamedValues map.</span>
+  NamedValues<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">&amp;</span>Arg <span class="token operator">:</span> TheFunction<span class="token operator">-></span><span class="token function">args</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    NamedValues<span class="token punctuation">[</span>std<span class="token double-colon punctuation">::</span><span class="token function">string</span><span class="token punctuation">(</span>Arg<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>Arg<span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Value <span class="token operator">*</span>RetVal <span class="token operator">=</span> Body<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Finish off the function.</span>
+    Builder<span class="token operator">-></span><span class="token function">CreateRet</span><span class="token punctuation">(</span>RetVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Validate the generated code, checking for consistency.</span>
+    <span class="token function">verifyFunction</span><span class="token punctuation">(</span><span class="token operator">*</span>TheFunction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> TheFunction<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// Error reading body, remove function.</span>
+  TheFunction<span class="token operator">-></span><span class="token function">eraseFromParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Top-Level parsing and JIT Driver</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">InitializeModule</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Open a new context and module.</span>
+  TheContext <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>LLVMContext<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  TheModule <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>Module<span class="token operator">></span></span></span><span class="token punctuation">(</span><span class="token string">"my cool jit"</span><span class="token punctuation">,</span> <span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Create a new builder for the module.</span>
+  Builder <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token generic-function"><span class="token function">make_unique</span><span class="token generic class-name"><span class="token operator">&lt;</span>IRBuilder<span class="token operator">&lt;</span><span class="token operator">>></span></span></span><span class="token punctuation">(</span><span class="token operator">*</span>TheContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">HandleDefinition</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> FnAST <span class="token operator">=</span> <span class="token function">ParseDefinition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">*</span>FnIR <span class="token operator">=</span> FnAST<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Read function definition:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      FnIR<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">errs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Skip token for error recovery.</span>
+    <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">HandleExtern</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> ProtoAST <span class="token operator">=</span> <span class="token function">ParseExtern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">*</span>FnIR <span class="token operator">=</span> ProtoAST<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Read extern: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      FnIR<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">errs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Skip token for error recovery.</span>
+    <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">HandleTopLevelExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Evaluate a top-level expression into an anonymous function.</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> FnAST <span class="token operator">=</span> <span class="token function">ParseTopLevelExpr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> <span class="token operator">*</span>FnIR <span class="token operator">=</span> FnAST<span class="token operator">-></span><span class="token function">codegen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Read top-level expression:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      FnIR<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">errs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+      <span class="token comment">// Remove the anonymous expression.</span>
+      FnIR<span class="token operator">-></span><span class="token function">eraseFromParent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Skip token for error recovery.</span>
+    <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/// top ::= definition | external | expression | ';'</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">MainLoop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"ready> "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>CurTok<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> tok_eof<span class="token operator">:</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token char">';'</span><span class="token operator">:</span> <span class="token comment">// ignore top-level semicolons.</span>
+      <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> tok_def<span class="token operator">:</span>
+      <span class="token function">HandleDefinition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> tok_extern<span class="token operator">:</span>
+      <span class="token function">HandleExtern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+      <span class="token function">HandleTopLevelExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+<span class="token comment">// Main driver code.</span>
+<span class="token comment">//===----------------------------------------------------------------------===//</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// Install standard binary operators.</span>
+  <span class="token comment">// 1 is lowest precedence.</span>
+  BinopPrecedence<span class="token punctuation">[</span><span class="token char">'&lt;'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+  BinopPrecedence<span class="token punctuation">[</span><span class="token char">'+'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+  BinopPrecedence<span class="token punctuation">[</span><span class="token char">'-'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+  BinopPrecedence<span class="token punctuation">[</span><span class="token char">'*'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">40</span><span class="token punctuation">;</span> <span class="token comment">// highest.</span>
+
+  <span class="token comment">// Prime the first token.</span>
+  <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"ready> "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">getNextToken</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Make the module, which holds all the code.</span>
+  <span class="token function">InitializeModule</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Run the main "interpreter loop" now.</span>
+  <span class="token function">MainLoop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Print out all of the generated code.</span>
+  TheModule<span class="token operator">-></span><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">errs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+
+    
+    <a href="/2024/06/11/%E5%8D%93%E4%B8%AD%E5%8D%93%E4%BA%8C%E8%BD%AE%E7%BB%BC%E5%90%88%E9%A2%98/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>卓中卓二轮综合题</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		
+<div class="footer">
+	<div class="Copyright">
+		©2024 By ChenSir. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+
+
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+</html>
+
