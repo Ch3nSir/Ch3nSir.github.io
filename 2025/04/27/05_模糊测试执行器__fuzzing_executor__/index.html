@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>AutoSafeCoder-Fuzzing Executor-ChenSir's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="UESTC,">
+<meta name="description" content="genshin impart">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.initHighlightingOnLoad();</script>
+
+	<meta name="generator" content="Hexo 6.2.0"></head>
+
+	<body>
+		
+	<div class="header">
+		<div class="header-top" id="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										HOME
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										ARCHIVE
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										CATEGORIES
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										TAGS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										LINKS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										ABOUT
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>ChenSir</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">HOME</a>
+        </li>
+        
+        <li>
+            <a href="/archives">ARCHIVE</a>
+        </li>
+        
+        <li>
+            <a href="/categories">CATEGORIES</a>
+        </li>
+        
+        <li>
+            <a href="/tags">TAGS</a>
+        </li>
+        
+        <li>
+            <a href="/links">LINKS</a>
+        </li>
+        
+        <li>
+            <a href="/about">ABOUT</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					width: "66%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					width: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/UESTC">UESTC</a></li>
+            
+            
+        </ul>
+        
+        <h1>AutoSafeCoder-Fuzzing Executor</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">ChenSir</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/UESTC/" target="_blank" >UESTC</a>
+                    
+                </div>
+                <p>2025-04-27 00:00:06</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h1 id="Chapter-5-模糊测试执行器-Fuzzing-Executor"><a href="#Chapter-5-模糊测试执行器-Fuzzing-Executor" class="headerlink" title="Chapter 5: 模糊测试执行器 (Fuzzing Executor)"></a>Chapter 5: 模糊测试执行器 (Fuzzing Executor)</h1><p>欢迎来到 AutoSafeCoder 教程的第五章！在上一章 <a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">第 4 章：模糊测试输入生成器 (Fuzzing Input Generator)</a> 中，我们认识了那位充满创意的“捣蛋工匠”，它为我们准备了大量奇奇怪怪、专门用来“找茬”的测试输入数据。</p>
+<p>现在我们有了测试代码的“弹药”（那些模糊测试输入），但光有弹药还不够，我们还需要一个“靶场”和一个“射击手”来把这些弹药打向我们的目标（也就是<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>编写的代码），并且仔细观察代码在中弹后会有什么反应——会不会“爆炸”（崩溃）、“卡壳”（出错）或者表现出其它异常行为？</p>
+<p>这就是我们本章要介绍的主角——<strong>模糊测试执行器 (Fuzzing Executor)</strong> 的职责所在。</p>
+<h2 id="什么是模糊测试执行器？"><a href="#什么是模糊测试执行器？" class="headerlink" title="什么是模糊测试执行器？"></a>什么是模糊测试执行器？</h2><p><strong>模糊测试执行器 (Fuzzing Executor)</strong> 是 AutoSafeCoder 团队中的“碰撞测试工程师”。它的核心任务是：</p>
+<ol>
+<li><strong>接收代码和输入</strong>：它从<a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架</a>那里拿到由<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>生成的代码，以及由<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>提供的大量、多样化的输入数据。</li>
+<li><strong>在受控环境中执行</strong>：它在一个相对隔离和安全的环境中，用这些输入数据去<strong>实际运行</strong>代码。这一点与<a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>不同，后者只检查代码文本而不运行。</li>
+<li><strong>监控和报告结果</strong>：在运行过程中，它会密切监控代码的行为。如果代码成功运行并返回结果，它会记录下来。更重要的是，如果代码因为某个“奇怪”的输入而<strong>崩溃、抛出异常、运行超时或者表现出任何意外行为</strong>，它会捕捉到这些情况，并生成报告。</li>
+</ol>
+<p>正如概念描述中提到的，模糊测试执行器就像一个<strong>汽车碰撞测试机构</strong>。这个机构拿到制造好的汽车（代码），把它放在模拟的极端碰撞场景（使用模糊测试输入运行）中进行测试，以评估其在真实世界压力下的稳定性和安全性。输入生成器负责设计各种碰撞场景（生成输入），而执行器则负责<strong>实际进行碰撞测试并记录结果</strong>。</p>
+<h2 id="模糊测试执行器如何工作？（高层视角）"><a href="#模糊测试执行器如何工作？（高层视角）" class="headerlink" title="模糊测试执行器如何工作？（高层视角）"></a>模糊测试执行器如何工作？（高层视角）</h2><p>想象一下我们的“碰撞测试工程师”（执行器）拿到了一段由<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>写的代码（比如一个处理用户配置文件的函数）和一堆由<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>准备好的“奇葩”配置文件（测试输入）。</p>
+<ol>
+<li><strong>准备测试环境</strong>：工程师会准备一个安全的测试场地（一个隔离的运行环境），确保测试过程不会影响到外部系统。</li>
+<li><strong>逐个进行测试</strong>：工程师拿起第一个“奇葩”配置文件（输入），加载到测试代码中，然后启动代码运行。</li>
+<li><strong>观察并记录</strong>：<ul>
+<li>如果代码顺利处理了配置文件并正常退出，工程师记录“通过”。</li>
+<li>如果代码在处理过程中突然崩溃（比如程序意外终止），工程师记录“崩溃”，并记下是哪个配置文件导致的。</li>
+<li>如果代码运行了很久都没有反应（超过了预设时间），工程师记录“超时”。</li>
+<li>如果代码抛出了一个未被处理的错误（异常），工程师记录“错误”及错误信息。</li>
+</ul>
+</li>
+<li><strong>重复测试</strong>：工程师继续拿起下一个配置文件，重复步骤 3，直到所有准备好的输入都测试完毕。</li>
+<li><strong>汇总报告</strong>：最后，工程师整理所有记录，形成一份详细的测试报告，交给<a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架</a>。这份报告会清楚地说明哪些输入导致了问题，以及问题的具体表现。</li>
+</ol>
+<p>这份报告对于改进代码至关重要。框架会根据报告中指出的问题，让<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>去修复代码中的缺陷。</p>
+<h2 id="如何使用模糊测试执行器？"><a href="#如何使用模糊测试执行器？" class="headerlink" title="如何使用模糊测试执行器？"></a>如何使用模糊测试执行器？</h2><p>在 AutoSafeCoder 项目中，模糊测试执行器的功能主要由 <code>executor_agent_safe.py</code> 文件中的 <code>execute_fuzz</code> 函数提供。虽然它不像其他组件那样被封装成一个单独的“Agent”类，但它扮演了执行器的角色。<a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架</a>（<code>main.py</code> 中的 <code>MultiAgentSystem</code> 类）在模糊测试的循环中调用这个函数。</p>
+<p>让我们看看 <code>main.py</code> 中框架是如何调用它的：</p>
+<p><strong>1. 在模糊测试循环中调用 <code>execute_fuzz</code></strong></p>
+<p>框架在 <code>run</code> 方法中，拿到初始输入后，会进入一个循环。在每次循环中，它调用 <code>execute_fuzz</code> 来运行代码，然后使用<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>（<code>InputMutatorAgent</code>）生成下一轮的输入。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (run 方法片段 - 模糊测试循环简化)</span>
+<span class="token keyword">from</span> executor_agent_safe <span class="token keyword">import</span> execute_fuzz <span class="token comment"># 导入执行函数</span>
+<span class="token comment"># ... 其他导入 ...</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token comment"># ... (init, 静态分析, 生成初始输入等) ...</span>
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">120</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># ... (前面的代码) ...</span>
+        current_inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>test_inputs <span class="token comment"># 使用初始或上一轮变异的输入</span>
+        failed_inputs_fuzz <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># 记录导致失败的输入</span>
+        fuzzing_test_status <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 记录模糊测试最终状态</span>
+
+        <span class="token keyword">for</span> iteration <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>iterations<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 进行 N 轮模糊测试</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"\n模糊测试迭代 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>iteration <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+            <span class="token comment"># === 关键步骤: 调用 execute_fuzz 执行代码 ===</span>
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                <span class="token comment"># 传入当前代码、当前输入和超时时间 (例如 3 秒)</span>
+                result_str<span class="token punctuation">,</span> passed<span class="token punctuation">,</span> inputs_used<span class="token punctuation">,</span> func_name <span class="token operator">=</span> execute_fuzz<span class="token punctuation">(</span>
+                    self<span class="token punctuation">.</span>code<span class="token punctuation">,</span>
+                    current_inputs<span class="token punctuation">,</span>
+                    <span class="token number">3</span>
+                <span class="token punctuation">)</span>
+            <span class="token keyword">except</span> Exception <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token comment"># 处理 execute_fuzz 本身可能出现的异常</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"执行模糊测试时出错: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+                fuzzing_test_status <span class="token operator">=</span> <span class="token string">"error running function"</span>
+                <span class="token keyword">break</span> <span class="token comment"># 中断模糊测试循环</span>
+
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"执行结果: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result_str<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span> <span class="token comment"># 打印执行器返回的字符串信息</span>
+
+            <span class="token comment"># === 检查执行结果 ===</span>
+            <span class="token keyword">if</span> <span class="token keyword">not</span> passed<span class="token punctuation">:</span> <span class="token comment"># 如果 passed 为 False，表示代码执行失败</span>
+                <span class="token comment"># (省略了处理特定错误类型的代码, 如模块缺失等)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"代码执行失败或超时！"</span><span class="token punctuation">)</span>
+                failed_inputs_fuzz<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'inputs'</span><span class="token punctuation">:</span> inputs_used<span class="token punctuation">,</span> <span class="token string">'result'</span><span class="token punctuation">:</span> result_str<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+                <span class="token comment"># 如果失败次数过多，提前终止</span>
+                <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>failed_inputs_fuzz<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">:</span>
+                    <span class="token keyword">break</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"代码执行成功。"</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># === 变异输入，准备下一轮 ===</span>
+            <span class="token comment"># (调用 InputMutatorAgent.mutate_inputs() 的代码，见上一章)</span>
+            <span class="token comment"># current_inputs = mutator_agent.mutate_inputs()</span>
+            <span class="token comment"># ...</span>
+
+        <span class="token comment"># === 模糊测试循环结束，处理结果 ===</span>
+        <span class="token comment"># (如果 failed_inputs_fuzz 不为空，则反馈给 ProgrammerAgent 尝试修复)</span>
+        <span class="token comment"># ... (省略) ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ol>
+<li><strong>导入</strong>: 首先，我们从 <code>executor_agent_safe.py</code> 文件导入 <code>execute_fuzz</code> 函数。</li>
+<li><strong>循环</strong>: 代码在一个 <code>for</code> 循环中运行，模拟多轮模糊测试。</li>
+<li><strong>调用 <code>execute_fuzz</code></strong>: 在循环内部，最关键的一行是调用 <code>execute_fuzz</code>。我们传入三个主要参数：<ul>
+<li><code>self.code</code>: 当前需要测试的 Python 代码字符串。</li>
+<li><code>current_inputs</code>: <a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>准备好的、用于本次测试的输入数据（通常是一个字典）。</li>
+<li><code>3</code>: 超时时间（单位：秒）。如果代码运行超过 3 秒还没结束，执行器会强制终止它并报告超时。</li>
+</ul>
+</li>
+<li><strong>获取结果</strong>: <code>execute_fuzz</code> 函数会返回几个值：<ul>
+<li><code>result_str</code>: 一个描述执行结果的字符串（比如 “passed”, “timed out”, “failed: &lt;错误信息&gt;”）。</li>
+<li><code>passed</code>: 一个布尔值，<code>True</code> 表示代码成功执行，<code>False</code> 表示失败（包括错误、超时等）。</li>
+<li><code>inputs_used</code>: 实际传递给被测函数的输入（通常与 <code>current_inputs</code> 相同）。</li>
+<li><code>func_name</code>: 从代码中提取出的函数名。</li>
+</ul>
+</li>
+<li><strong>检查结果</strong>: 框架检查 <code>passed</code> 变量。如果为 <code>False</code>，说明本次测试发现了问题。框架会记录下导致失败的输入 (<code>inputs_used</code>) 和结果 (<code>result_str</code>) 到 <code>failed_inputs_fuzz</code> 列表中。</li>
+<li><strong>后续处理</strong>: 循环结束后，如果 <code>failed_inputs_fuzz</code> 列表不为空，框架就会将这些失败信息反馈给<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>，让它尝试修复代码。</li>
+</ol>
+<p><strong>示例输入:</strong></p>
+<ul>
+<li><code>self.code</code>:<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">divide</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># 这个函数没有处理除以零的情况</span>
+    <span class="token keyword">return</span> a <span class="token operator">/</span> b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li><code>current_inputs</code>: <code>&#123;&#39;a&#39;: 10, &#39;b&#39;: 0&#125;</code> (由<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>生成)</li>
+<li><code>timeout</code>: <code>3</code></li>
+</ul>
+<p><strong>可能的输出 (<code>execute_fuzz</code> 返回值):</strong></p>
+<ul>
+<li><code>result_str</code>: <code>&quot;failed: division by zero&quot;</code> (或者类似的错误信息)</li>
+<li><code>passed</code>: <code>False</code></li>
+<li><code>inputs_used</code>: <code>&#123;&#39;a&#39;: 10, &#39;b&#39;: 0&#125;</code></li>
+<li><code>func_name</code>: <code>&quot;divide&quot;</code></li>
+</ul>
+<p>框架会捕捉到这个 <code>passed = False</code> 的结果，并将 <code>&#123;&#39;inputs&#39;: &#123;&#39;a&#39;: 10, &#39;b&#39;: 0&#125;, &#39;result&#39;: &#39;failed: division by zero&#39;&#125;</code> 添加到 <code>failed_inputs_fuzz</code> 列表中。</p>
+<p>通过这种方式，模糊测试执行器（<code>execute_fuzz</code> 函数）充当了实际运行代码并报告问题的关键角色。</p>
+<h2 id="内部实现揭秘"><a href="#内部实现揭秘" class="headerlink" title="内部实现揭秘"></a>内部实现揭秘</h2><p>我们已经了解了模糊测试执行器（<code>execute_fuzz</code> 函数）的作用和用法，现在让我们稍微深入一点，看看它是如何在 <code>executor_agent_safe.py</code> 文件内部安全地执行潜在不安全的代码的。</p>
+<p><strong>非代码流程图解:</strong></p>
+<p>当框架调用 <code>execute_fuzz</code> 函数时，内部大致发生了什么？</p>
+<pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
+    <span class="token keyword">participant</span> MAS as 多智能体协作框架 <span class="token text string">(main.py)</span>
+    <span class="token keyword">participant</span> EF as 执行器函数 <span class="token text string">(execute_fuzz)</span>
+    <span class="token keyword">participant</span> MP as Python多进程模块 <span class="token text string">(multiprocessing)</span>
+    <span class="token keyword">participant</span> ChildP as 子进程 <span class="token text string">(运行unsafe_execute)</span>
+    <span class="token keyword">participant</span> Code as 被测代码 <span class="token text string">(在子进程中运行)</span>
+
+    MAS<span class="token arrow operator">->></span>EF<span class="token operator">:</span> 调用 execute_fuzz<span class="token text string">(代码, 输入, 超时时间)</span>
+    EF<span class="token arrow operator">->></span>MP<span class="token operator">:</span> 创建Manager用于进程间通信 <span class="token text string">(结果列表)</span>
+    EF<span class="token arrow operator">->></span>MP<span class="token operator">:</span> 准备启动一个新进程，目标是 unsafe_execute 函数
+    MP<span class="token arrow operator">->></span>ChildP<span class="token operator">:</span> 启动子进程
+    <span class="token keyword">Note right of</span> ChildP<span class="token operator">:</span> 子进程开始执行 unsafe_execute
+    ChildP<span class="token arrow operator">->></span>ChildP<span class="token operator">:</span> 设置安全防护 <span class="token text string">(reliability_guard)</span>
+    ChildP<span class="token arrow operator">->></span>ChildP<span class="token operator">:</span> 构造包含代码和输入的完整脚本
+    ChildP<span class="token arrow operator">->></span>Code<span class="token operator">:</span> 使用 exec<span class="token punctuation">(</span><span class="token punctuation">)</span> 执行构造好的脚本
+    <span class="token keyword">alt</span> 代码执行成功
+        Code<span class="token arrow operator">-->></span>ChildP<span class="token operator">:</span> 正常结束 <span class="token text string">(可能打印结果到标准输出)</span>
+        ChildP<span class="token arrow operator">->></span>MP<span class="token operator">:</span> 将 <span class="token string">"passed"</span> 写入结果列表
+    <span class="token keyword">else</span> 代码执行出错/超时
+        Code<span class="token arrow operator">-->></span>ChildP<span class="token operator">:</span> 抛出异常 或 超时被捕获
+        ChildP<span class="token arrow operator">->></span>MP<span class="token operator">:</span> 将错误信息或 <span class="token string">"timed out"</span> 写入结果列表
+    <span class="token keyword">end</span>
+    ChildP<span class="token arrow operator">-->></span>MP<span class="token operator">:</span> 子进程结束
+    MP<span class="token arrow operator">-->></span>EF<span class="token operator">:</span> 父进程检测到子进程结束
+    EF<span class="token arrow operator">->></span>MP<span class="token operator">:</span> 从Manager获取结果列表
+    EF<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回解析后的结果 <span class="token text string">(result_str, passed, inputs, func_name)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>图解说明:</strong></p>
+<ol>
+<li><strong>框架 (MAS)</strong> 调用 <code>execute_fuzz</code> 函数 (EF)，传入代码、输入和超时时间。</li>
+<li><strong><code>execute_fuzz</code> (EF)</strong> 使用 Python 的 <code>multiprocessing</code> 模块 (MP) 来创建一个新的、独立的<strong>子进程</strong> (ChildP)。这样做是为了隔离执行，防止被测代码如果崩溃或行为不当，影响到主程序（框架）。它还创建了一个共享的 <code>Manager.list()</code> 用于从子进程取回结果。</li>
+<li><strong>子进程 (ChildP)</strong> 开始执行一个名为 <code>unsafe_execute</code> 的内部函数。</li>
+<li>在 <code>unsafe_execute</code> 内部，首先会调用 <code>reliability_guard()</code> 设置一些<strong>安全限制</strong>（比如禁用某些危险的系统调用），这是<a href="06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__.md">安全代码执行环境</a>的一部分。</li>
+<li>然后，它会将传入的代码和输入数据<strong>动态地组装</strong>成一个完整的 Python 脚本字符串。</li>
+<li>最关键的一步：子进程使用 <code>exec()</code> 函数来执行这个构造好的脚本字符串。<code>exec()</code> 可以执行存储在字符串中的 Python 代码。同时，会设置一个<strong>时间限制</strong> (<code>time_limit</code>)。</li>
+<li><strong>被测代码 (Code)</strong> 开始在子进程中运行。<ul>
+<li><strong>如果代码正常运行</strong>结束，子进程会捕获其输出（如果有），并将表示成功的状态（如 “passed”）写入共享的结果列表中。</li>
+<li><strong>如果代码运行出错</strong>（比如抛出未捕获的异常，如 <code>ZeroDivisionError</code>），或者运行<strong>时间超过了设定的阈值</strong>，<code>exec()</code> 的调用会被中断或捕获。子进程会将相应的错误信息（如 “failed: division by zero”）或 “timed out” 写入结果列表。</li>
+</ul>
+</li>
+<li>子进程执行完毕后退出。</li>
+<li><strong>父进程 (EF)</strong> 通过 <code>p.join()</code> 等待子进程结束（或者超时后强制结束 <code>p.kill()</code>）。</li>
+<li>父进程从共享的结果列表中读取子进程写入的状态信息。</li>
+<li><code>execute_fuzz</code> 函数解析这个状态信息，转换成 <code>result_str</code> 和 <code>passed</code> 等返回值，最终交还给框架 (MAS)。</li>
+</ol>
+<p>这种使用<strong>独立进程</strong>和<strong>超时控制</strong>的方法是执行不可信代码（比如由 AI 生成的代码）时常用的安全实践。</p>
+<p><strong>代码层面的深入了解:</strong></p>
+<p>让我们看看 <code>executor_agent_safe.py</code> 中 <code>execute_fuzz</code> 函数的核心部分。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># executor_agent_safe.py (片段 - 简化)</span>
+<span class="token keyword">import</span> multiprocessing
+<span class="token keyword">import</span> signal
+<span class="token keyword">import</span> contextlib
+<span class="token keyword">import</span> tempfile
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> json
+<span class="token comment"># ... 其他导入 ...</span>
+
+<span class="token comment"># (FResult 枚举定义，省略)</span>
+<span class="token comment"># (remove_json_prefix 函数定义，省略)</span>
+
+<span class="token keyword">def</span> <span class="token function">execute_fuzz</span><span class="token punctuation">(</span>completion<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> input_json<span class="token punctuation">,</span> timeout<span class="token punctuation">:</span> <span class="token builtin">float</span><span class="token punctuation">,</span>
+                      completion_id<span class="token punctuation">:</span> Optional<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Dict<span class="token punctuation">:</span>
+
+    <span class="token comment"># 内部函数：实际在子进程中运行的代码</span>
+    <span class="token keyword">def</span> <span class="token function">unsafe_execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 在临时目录中运行，并设置资源限制</span>
+        <span class="token keyword">with</span> create_tempdir<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># 禁用危险函数，这是安全措施的一部分</span>
+            reliability_guard<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># 准备要执行的代码字符串</span>
+            <span class="token comment"># (get_exec_code 会将用户代码和输入包装成一个完整脚本)</span>
+            code_to_run<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> func_name <span class="token operator">=</span> get_exec_code<span class="token punctuation">(</span>completion<span class="token punctuation">,</span> input_json<span class="token punctuation">)</span>
+            inputs_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>inputs<span class="token punctuation">)</span> <span class="token comment"># 通过 manager list 把输入传回父进程</span>
+            func_names<span class="token punctuation">.</span>append<span class="token punctuation">(</span>func_name<span class="token punctuation">)</span> <span class="token comment"># 把函数名传回父进程</span>
+
+            <span class="token keyword">try</span><span class="token punctuation">:</span>
+                exec_globals <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+                <span class="token comment"># 在受控的 IO 环境下执行</span>
+                <span class="token keyword">with</span> swallow_io<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                    <span class="token comment"># 设置超时限制</span>
+                    <span class="token keyword">with</span> time_limit<span class="token punctuation">(</span>timeout<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                        <span class="token comment"># === 核心：执行代码 ===</span>
+                        <span class="token keyword">exec</span><span class="token punctuation">(</span>code_to_run<span class="token punctuation">,</span> exec_globals<span class="token punctuation">)</span>
+                <span class="token comment"># 如果 exec 成功并没有抛异常，标记为 passed</span>
+                result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"passed"</span><span class="token punctuation">)</span>
+            <span class="token keyword">except</span> TimeoutException<span class="token punctuation">:</span>
+                result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"timed out"</span><span class="token punctuation">)</span> <span class="token comment"># 捕获超时异常</span>
+            <span class="token keyword">except</span> BaseException <span class="token keyword">as</span> e<span class="token punctuation">:</span>
+                <span class="token comment"># 捕获所有其他异常</span>
+                result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"failed: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>e<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 使用 multiprocessing Manager 来在进程间共享结果</span>
+    manager <span class="token operator">=</span> multiprocessing<span class="token punctuation">.</span>Manager<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    result <span class="token operator">=</span> manager<span class="token punctuation">.</span><span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 存储执行结果 ("passed", "timed out", "failed: ...")</span>
+    inputs_list <span class="token operator">=</span> manager<span class="token punctuation">.</span><span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 存储实际使用的输入</span>
+    func_names <span class="token operator">=</span> manager<span class="token punctuation">.</span><span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 存储提取的函数名</span>
+
+    <span class="token comment"># 创建并启动子进程，运行 unsafe_execute 函数</span>
+    p <span class="token operator">=</span> multiprocessing<span class="token punctuation">.</span>Process<span class="token punctuation">(</span>target<span class="token operator">=</span>unsafe_execute<span class="token punctuation">)</span>
+    p<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment"># 等待子进程结束，设置一个比内部超时稍长的时间</span>
+    p<span class="token punctuation">.</span>join<span class="token punctuation">(</span>timeout<span class="token operator">=</span>timeout <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 如果子进程仍在运行 (join 超时)，则强制终止</span>
+    <span class="token keyword">if</span> p<span class="token punctuation">.</span>is_alive<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        p<span class="token punctuation">.</span>kill<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment"># 如果结果列表为空，说明可能是被 kill 了，标记为超时</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> result<span class="token punctuation">:</span>
+             result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"timed out"</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 如果结果列表仍然为空 (极端情况)，也标记为超时</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> result<span class="token punctuation">:</span>
+        result<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">"timed out"</span><span class="token punctuation">)</span>
+
+    <span class="token comment"># 从 manager list 中获取结果</span>
+    final_result_str <span class="token operator">=</span> result<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    final_passed <span class="token operator">=</span> <span class="token punctuation">(</span>final_result_str <span class="token operator">==</span> <span class="token string">'passed'</span><span class="token punctuation">)</span>
+    final_inputs <span class="token operator">=</span> inputs_list<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">if</span> inputs_list <span class="token keyword">else</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    final_func_name <span class="token operator">=</span> func_names<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">if</span> func_names <span class="token keyword">else</span> <span class="token boolean">None</span>
+
+    <span class="token comment"># 返回结果给调用者 (main.py)</span>
+    <span class="token keyword">return</span> final_result_str<span class="token punctuation">,</span> final_passed<span class="token punctuation">,</span> final_inputs<span class="token punctuation">,</span> final_func_name
+
+<span class="token comment"># (其他辅助函数如 time_limit, swallow_io, create_tempdir, reliability_guard 定义省略)</span>
+<span class="token comment"># (get_exec_code 函数定义，将用户代码和输入包装成可执行脚本，省略)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ol>
+<li><strong><code>unsafe_execute</code> 函数</strong>: 这是将在<strong>子进程</strong>中执行的代码逻辑。<ul>
+<li><code>create_tempdir()</code>: 创建一个临时目录并在其中运行，避免污染主环境。</li>
+<li><code>reliability_guard()</code>: 调用一个辅助函数，禁用 Python 中一些可能被滥用的功能（如 <code>os.fork</code>, <code>shutil.rmtree</code>），增加安全性。这是<a href="06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__.md">安全代码执行环境</a>的关键组成部分。</li>
+<li><code>get_exec_code()</code>: 这是一个辅助函数（代码中未完全展示），它负责将传入的函数代码 (<code>completion</code>) 和输入 (<code>input_json</code>) 包装成一个完整的、可以直接执行的 Python 脚本字符串。例如，它会添加必要的 <code>import json</code>，定义一个 <code>main</code> 函数来调用用户的函数，并处理输入和输出的 JSON 序列化。</li>
+<li><code>manager.list().append()</code>: 将解析后的输入 <code>inputs</code> 和函数名 <code>func_name</code> 添加到由 <code>multiprocessing.Manager</code> 创建的共享列表中，以便父进程可以获取它们。</li>
+<li><code>try...except</code>: 使用 <code>try...except</code> 块来包裹核心的 <code>exec()</code> 调用。</li>
+<li><code>swallow_io()</code>: 一个上下文管理器，用于抑制被测代码的标准输出和标准错误输出，防止它们干扰主程序的输出。</li>
+<li><code>time_limit(timeout)</code>: 另一个上下文管理器，使用 <code>signal</code> 模块设置一个定时器。如果在 <code>timeout</code> 秒内 <code>exec()</code> 没有执行完毕，它会抛出 <code>TimeoutException</code>。</li>
+<li><code>exec(code_to_run, exec_globals)</code>: 这是执行代码的核心。它在当前的全局命名空间 (<code>exec_globals</code>) 中执行 <code>code_to_run</code> 字符串中的 Python 代码。</li>
+<li>结果记录: 如果 <code>exec</code> 成功，则将 “passed” 添加到共享的 <code>result</code> 列表；如果捕获到 <code>TimeoutException</code>，则添加 “timed out”；如果捕获到其他任何异常 (<code>BaseException</code>)，则将 “failed: &lt;错误信息&gt;” 添加到 <code>result</code> 列表。</li>
+</ul>
+</li>
+<li><strong>主函数逻辑 (<code>execute_fuzz</code>)</strong>: 这是在<strong>父进程</strong>（被 <code>main.py</code> 调用）中执行的代码。<ul>
+<li><code>multiprocessing.Manager()</code>: 创建一个 Manager 对象，用于创建可以在不同进程之间安全共享的数据结构（这里是列表 <code>result</code>, <code>inputs_list</code>, <code>func_names</code>）。</li>
+<li><code>multiprocessing.Process()</code>: 创建一个新的进程对象 <code>p</code>，指定其目标函数为 <code>unsafe_execute</code>。</li>
+<li><code>p.start()</code>: 启动子进程。</li>
+<li><code>p.join(timeout=timeout + 1)</code>: 等待子进程结束。设置的超时时间略长于子进程内部的超时时间，以确保子进程有时间完成或超时。</li>
+<li><code>p.is_alive()</code>, <code>p.kill()</code>: 如果 <code>join</code> 超时后子进程仍然在运行，说明可能卡死了，父进程会强制终止 (<code>kill</code>) 它，并记录结果为 “timed out”。</li>
+<li>结果解析: 从共享列表 <code>result</code>, <code>inputs_list</code>, <code>func_names</code> 中取出子进程写入的数据。</li>
+<li>返回: 将最终的执行结果字符串、表示是否通过的布尔值、实际使用的输入和函数名返回给 <code>main.py</code> 中的调用者。</li>
+</ul>
+</li>
+</ol>
+<p>这种结合了<strong>多进程隔离</strong>、<strong>资源限制</strong> (<code>reliability_guard</code>) 和<strong>超时控制</strong> (<code>time_limit</code>) 的方法，使得 <code>execute_fuzz</code> 能够相对安全地运行来自不可信来源（如 AI 模型）的代码，并有效地捕捉运行时错误和崩溃。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本章中，我们深入了解了 AutoSafeCoder 的“碰撞测试工程师”——**模糊测试执行器 (Fuzzing Executor)**。我们学习到：</p>
+<ul>
+<li>它的核心职责是<strong>实际运行</strong>由<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>编写的代码，并使用由<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>提供的多样化输入进行测试。</li>
+<li>它像一个碰撞测试机构，通过模拟极端情况（运行模糊测试输入）来评估代码的<strong>健壮性和安全性</strong>，目的是发现<strong>运行时错误、崩溃或超时</strong>。</li>
+<li>在 AutoSafeCoder 中，这个功能主要由 <code>executor_agent_safe.py</code> 文件中的 <code>execute_fuzz</code> 函数实现。</li>
+<li><a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架</a>在模糊测试循环中调用 <code>execute_fuzz</code>，并根据其返回的 <code>passed</code> 状态和结果信息来判断测试是否成功，以及是否需要反馈给程序员进行修复。</li>
+<li>我们通过流程图和代码分析，了解了 <code>execute_fuzz</code> 的内部实现关键：使用 Python 的 <code>multiprocessing</code> 模块将代码执行<strong>隔离在子进程</strong>中，并通过<strong>超时控制</strong> (<code>time_limit</code>) 和<strong>安全防护</strong> (<code>reliability_guard</code>) 来确保测试过程的相对安全和可控。</li>
+</ul>
+<p>模糊测试执行器是 AutoSafeCoder 进行动态代码分析、发现隐藏运行时问题的关键环节。它依赖于一个安全可靠的执行环境来完成任务。</p>
+<p><strong>下一章预告:</strong> <a href="06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__.md">第 6 章：安全代码执行环境 (Secure Code Execution Environment)</a> - 我们将更详细地探讨 AutoSafeCoder 是如何构建和利用这个安全环境来运行潜在不安全代码的。</p>
+<hr>
+<p>Generated by <a target="_blank" rel="noopener" href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2025/04/27/07_%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E4%BA%A4%E4%BA%92%E6%8E%A5%E5%8F%A3__large_language_model_interaction_interface__/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>AutoSafeCoder-Large Language Model Interaction Interface</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2025/04/27/06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>AutoSafeCoder-Secure Code Execution Environment</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		
+<div class="footer">
+	<div class="Copyright">
+		©2025 By ChenSir. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+
+
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+</html>
+

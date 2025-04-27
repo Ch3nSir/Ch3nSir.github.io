@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>AutoSafeCoder-Large Language Model Interaction Interface-ChenSir's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="UESTC,">
+<meta name="description" content="genshin impart">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.initHighlightingOnLoad();</script>
+
+	<meta name="generator" content="Hexo 6.2.0"></head>
+
+	<body>
+		
+	<div class="header">
+		<div class="header-top" id="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										HOME
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										ARCHIVE
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										CATEGORIES
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										TAGS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										LINKS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										ABOUT
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>ChenSir</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">HOME</a>
+        </li>
+        
+        <li>
+            <a href="/archives">ARCHIVE</a>
+        </li>
+        
+        <li>
+            <a href="/categories">CATEGORIES</a>
+        </li>
+        
+        <li>
+            <a href="/tags">TAGS</a>
+        </li>
+        
+        <li>
+            <a href="/links">LINKS</a>
+        </li>
+        
+        <li>
+            <a href="/about">ABOUT</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					width: "66%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					width: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/UESTC">UESTC</a></li>
+            
+            
+        </ul>
+        
+        <h1>AutoSafeCoder-Large Language Model Interaction Interface</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">ChenSir</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/UESTC/" target="_blank" >UESTC</a>
+                    
+                </div>
+                <p>2025-04-27 00:00:07</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h1 id="Chapter-7-大语言模型交互接口-Large-Language-Model-Interaction-Interface"><a href="#Chapter-7-大语言模型交互接口-Large-Language-Model-Interaction-Interface" class="headerlink" title="Chapter 7: 大语言模型交互接口 (Large Language Model Interaction Interface)"></a>Chapter 7: 大语言模型交互接口 (Large Language Model Interaction Interface)</h1><p>在上一章 <a href="06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__.md">第 6 章：安全代码执行环境 (Secure Code Execution Environment)</a> 中，我们了解了 AutoSafeCoder 如何像一个谨慎的化学家那样，在一个安全的“隔离箱”里运行潜在危险的代码，确保测试过程不会威胁到我们的系统。这解决了安全执行的问题。</p>
+<p>但是，AutoSafeCoder 的许多核心能力，比如让<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体 (Programmer Agent)</a>编写和修改代码，或者让<a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器 (Static Security Analyzer)</a>使用 AI 来检查代码漏洞，都依赖于与强大的**大语言模型 (Large Language Model, LLM)**（比如 OpenAI 的 GPT 系列）进行沟通。</p>
+<p>想象一下，AutoSafeCoder 就像一个国家，而外部的大语言模型（比如 GPT）就像另一个强大的国家。它们说不同的“语言”，有不同的“习俗”（API 接口规范）。我们不能直接冲着对方大喊我们的需求（比如“给我写个代码！”），我们需要一个专业的团队来处理两国之间的交流。</p>
+<p>这个专业的团队，在 AutoSafeCoder 里，就是我们今天要认识的**大语言模型交互接口 (Large Language Model Interaction Interface)**。</p>
+<h2 id="什么是大语言模型交互接口？"><a href="#什么是大语言模型交互接口？" class="headerlink" title="什么是大语言模型交互接口？"></a>什么是大语言模型交互接口？</h2><p>简单来说，<strong>大语言模型交互接口</strong>是 AutoSafeCoder 内部的一组<strong>工具函数</strong>，它们专门负责处理与外部大语言模型（如 GPT）的所有通信细节。它就像是 AutoSafeCoder 的“外交部”和“翻译团队”。</p>
+<p>它的主要职责包括：</p>
+<ol>
+<li>**构建请求 (构建提示 Prompt)**：将 AutoSafeCoder 内部的需求（比如“根据这个描述写代码”或“分析这段代码的安全性”）转换成符合大语言模型 API 要求的格式。这就像外交官准备正式的照会文件。</li>
+<li>**发送请求 (调用 API)**：通过互联网将构建好的请求发送给大语言模型的服务器。这就像外交官递交国书。</li>
+<li>**接收响应 (处理回复)**：接收大语言模型返回的结果（通常是一段文本，比如生成的代码或分析报告）。</li>
+<li>**解析和清理 (翻译和整理)**：从模型返回的文本中提取出有用的信息（比如只提取代码部分，去掉解释性文字），并将其整理成 AutoSafeCoder 其他部分能理解的格式。这就像翻译官将对方的回复准确地翻译整理成本国语言。</li>
+</ol>
+<p>没有这个接口，AutoSafeCoder 内部的各个智能体（比如<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>）就需要自己去了解如何构造复杂的 API 请求、如何处理网络错误、如何解析各种可能的回复格式等等。这会让每个智能体的实现变得非常复杂和臃肿。</p>
+<p><strong>大语言模型交互接口</strong>通过将这些复杂的通信细节<strong>封装</strong>起来，提供了一套简单易用的函数。其他智能体只需要调用这些函数，告诉它们“我要让 LLM 做什么”，然后就能拿到处理好的结果，无需关心背后的通信过程。</p>
+<h2 id="接口如何帮助我们与-LLM-沟通？"><a href="#接口如何帮助我们与-LLM-沟通？" class="headerlink" title="接口如何帮助我们与 LLM 沟通？"></a>接口如何帮助我们与 LLM 沟通？</h2><p>让我们回到<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>需要编写代码的场景。</p>
+<ol>
+<li><strong>需求</strong>: <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>收到了一个任务：“编写一个 Python 函数，计算两个整数的和。”</li>
+<li><strong>调用接口</strong>: 程序员智能体<strong>不会</strong>直接去写调用 OpenAI API 的代码。它会调用<strong>大语言模型交互接口</strong>提供的一个函数，比如 <code>call_chatgpt_programmer</code>，并把需求传递给这个函数。</li>
+<li><strong>接口工作</strong>:<ul>
+<li><code>call_chatgpt_programmer</code> 函数接收到需求。</li>
+<li>它内部可能会加载一个预设的“提示模板”（Prompt Template），这个模板会指导 LLM 如何更好地生成代码（比如要求输出 Python 代码，并用特定格式包裹）。</li>
+<li>它将用户的需求和模板结合，构建一个完整的、结构化的请求。</li>
+<li>它使用 <code>openai</code> 库将这个请求发送给 GPT 模型。</li>
+<li>它等待并接收 GPT 返回的文本。</li>
+<li>它调用另一个辅助函数（比如 <code>preprocess_string</code>）来清理 GPT 的回复，可能去掉 GPT 回答中多余的聊天内容，只留下纯净的 Python 代码块。</li>
+</ul>
+</li>
+<li><strong>返回结果</strong>: <code>call_chatgpt_programmer</code> 函数将清理好的 Python 代码字符串返回给<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>。</li>
+<li><strong>完成</strong>: <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>拿到了所需的代码，可以继续后续的工作了。</li>
+</ol>
+<p>在这个过程中，<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>完全不需要知道 API Key 是什么、请求应该是什么格式、如何处理网络超时等细节。所有这些都被<strong>大语言模型交互接口</strong>（在 AutoSafeCoder 项目中，主要体现在 <code>utils.py</code> 文件里的函数）处理掉了。</p>
+<h2 id="如何使用这个接口？"><a href="#如何使用这个接口？" class="headerlink" title="如何使用这个接口？"></a>如何使用这个接口？</h2><p>正如上面例子所示，AutoSafeCoder 中的其他智能体（如 <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>, <a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>, <a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a> 中的 <code>TesterFuzzAgent</code>）是这个接口的<strong>使用者</strong>。它们通过调用定义在 <code>utils.py</code> 文件中的特定函数来与 LLM 交互。</p>
+<p>我们回顾一下 <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a> 是如何使用这些接口函数的：</p>
+<p><strong>场景 1：生成初始代码</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># programmer_agent.py (write_code 方法片段)</span>
+<span class="token keyword">from</span> utils <span class="token keyword">import</span> call_chatgpt_programmer <span class="token comment"># &lt;&lt;&lt;--- 导入接口函数</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ProgrammerAgent</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> entry<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>entry <span class="token operator">=</span> entry
+
+    <span class="token keyword">def</span> <span class="token function">write_code</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 准备传递给接口函数的简单需求描述</span>
+        prompt <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"创建一个 Python 函数，遵循以下代码要求: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">.</span>entry<span class="token punctuation">[</span><span class="token string">'Prompt'</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span>
+        <span class="token comment"># === 调用接口函数 ===</span>
+        <span class="token comment"># 让接口函数处理与 LLM 的所有通信细节</span>
+        code <span class="token operator">=</span> call_chatgpt_programmer<span class="token punctuation">(</span>prompt<span class="token punctuation">)</span>
+        <span class="token comment"># 接口函数返回处理好的代码字符串</span>
+        <span class="token keyword">return</span> code<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li><code>ProgrammerAgent</code> 从 <code>utils.py</code> 导入了 <code>call_chatgpt_programmer</code> 这个函数。</li>
+<li>它构造了一个包含任务需求的字符串 <code>prompt</code>。</li>
+<li>它直接调用 <code>call_chatgpt_programmer(prompt)</code>，将与 LLM 对话的任务委托给了这个接口函数。</li>
+<li>它接收接口函数返回的、已经过处理的代码字符串 <code>code</code>。</li>
+</ul>
+<p><strong>场景 2：根据静态分析反馈修改代码</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># programmer_agent.py (write_code_feedback_static 方法片段)</span>
+<span class="token keyword">from</span> utils <span class="token keyword">import</span> call_chatgpt_programmer_feedback_static <span class="token comment"># &lt;&lt;&lt;--- 导入另一个接口函数</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ProgrammerAgent</span><span class="token punctuation">:</span>
+    <span class="token comment"># ... (init, write_code 方法) ...</span>
+
+    <span class="token keyword">def</span> <span class="token function">write_code_feedback_static</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> completion<span class="token punctuation">,</span> cwe_code<span class="token punctuation">,</span> issue_text<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># === 调用接口函数 ===</span>
+        <span class="token comment"># 传入当前代码和反馈信息，让接口函数去请求 LLM 进行修改</span>
+        code <span class="token operator">=</span> call_chatgpt_programmer_feedback_static<span class="token punctuation">(</span>
+            completion<span class="token punctuation">,</span>      <span class="token comment"># 当前代码</span>
+            self<span class="token punctuation">.</span>entry<span class="token punctuation">,</span>      <span class="token comment"># 原始任务信息</span>
+            cwe_code<span class="token punctuation">,</span>        <span class="token comment"># CWE 编号</span>
+            issue_text       <span class="token comment"># 错误描述</span>
+        <span class="token punctuation">)</span>
+        <span class="token comment"># 接口函数返回 LLM 修改后的代码</span>
+        <span class="token keyword">return</span> code<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>这次，<code>ProgrammerAgent</code> 导入并调用了另一个专门处理静态分析反馈的接口函数 <code>call_chatgpt_programmer_feedback_static</code>。</li>
+<li>它将当前有问题的代码和具体的错误描述传递给这个接口函数。</li>
+<li>接口函数负责构造一个包含代码和反馈的、要求 LLM 修复问题的请求，发送给 LLM，并处理返回结果。</li>
+<li><code>ProgrammerAgent</code> 同样只需等待接口函数返回修改后的代码即可。</li>
+</ul>
+<p>类似地，<a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>（<code>ExecutorStaticAgent</code>）会调用 <code>utils.py</code> 中的 <code>call_chatgpt_analyze_static_security</code> 接口函数来请求 LLM 分析代码；<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>（<code>TesterFuzzAgent</code>）会调用 <code>call_chatgpt_fuzzing_tester</code> 接口函数来生成初始测试输入。</p>
+<p>这些接口函数（位于 <code>utils.py</code>）共同构成了 AutoSafeCoder 的<strong>大语言模型交互接口</strong>，为其他所有需要与 LLM 通信的组件提供了简单、统一的调用方式。</p>
+<h2 id="内部实现揭秘"><a href="#内部实现揭秘" class="headerlink" title="内部实现揭秘"></a>内部实现揭秘</h2><p>我们已经了解了这个接口的作用和如何使用它，现在稍微深入一点，看看这些位于 <code>utils.py</code> 的接口函数内部是如何工作的。</p>
+<p><strong>非代码流程图解 (以 Programmer Agent 请求写代码为例):</strong></p>
+<pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
+    <span class="token keyword">participant</span> PA as 程序员智能体 <span class="token text string">(ProgrammerAgent)</span>
+    <span class="token keyword">participant</span> IFace as 接口函数 <span class="token text string">(utils.py: call_chatgpt_programmer)</span>
+    <span class="token keyword">participant</span> OpenAI as OpenAI API 库
+    <span class="token keyword">participant</span> LLM as GPT 模型
+
+    PA<span class="token arrow operator">->></span>IFace<span class="token operator">:</span> 调用 call_chatgpt_programmer<span class="token text string">(需求描述)</span>
+    IFace<span class="token arrow operator">->></span>IFace<span class="token operator">:</span> 构建完整的提示 <span class="token text string">(结合需求和Few-Shot模板)</span>
+    <span class="token keyword">Note right of</span> IFace<span class="token operator">:</span> 例如<span class="token operator">:</span> <span class="token string">"根据以下模板和要求写代码..."</span>
+    IFace<span class="token arrow operator">->></span>OpenAI<span class="token operator">:</span> 调用 openai.chat.completions.create<span class="token text string">(模型, 提示)</span>
+    OpenAI<span class="token arrow operator">->></span>LLM<span class="token operator">:</span> 发送 API 请求
+    LLM<span class="token arrow operator">-->></span>OpenAI<span class="token operator">:</span> 返回包含代码的文本响应
+    OpenAI<span class="token arrow operator">-->></span>IFace<span class="token operator">:</span> 返回 API 响应对象
+    IFace<span class="token arrow operator">->></span>IFace<span class="token operator">:</span> 从响应中提取文本内容
+    IFace<span class="token arrow operator">->></span>IFace<span class="token operator">:</span> 调用 preprocess_string<span class="token punctuation">(</span><span class="token punctuation">)</span> 清理文本 <span class="token text string">(去```等)</span>
+    IFace<span class="token arrow operator">-->></span>PA<span class="token operator">:</span> 返回纯净的代码字符串<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>图解说明:</strong></p>
+<ol>
+<li><strong>程序员智能体 (PA)</strong> 调用 <code>utils.py</code> 中的接口函数 <code>call_chatgpt_programmer</code>，传入简单的需求描述。</li>
+<li><strong>接口函数 (IFace)</strong> 接收到需求后，会执行关键的第一步：**构建提示 (Prompt Engineering)**。它通常会加载一个预先准备好的、包含示例（Few-Shot）的复杂提示模板（比如从 <code>coder_agent_prompt.txt</code> 文件读取），然后将用户的简单需求嵌入到这个模板中，形成一个结构化的、能更好引导 LLM 输出所需内容的完整提示。</li>
+<li><strong>接口函数</strong> 使用 Python 的 <code>openai</code> 库（OpenAI）提供的 <code>chat.completions.create</code> 方法，将构建好的提示和指定的模型名称（如 “gpt-4o”）发送出去。</li>
+<li><code>openai</code> 库负责处理与 <strong>GPT 模型 (LLM)</strong> 服务器的网络通信。</li>
+<li><strong>LLM</strong> 处理请求，生成回应文本（通常包含解释和代码块）。</li>
+<li><code>openai</code> 库将 <strong>LLM</strong> 的回应返回给接口函数。</li>
+<li><strong>接口函数</strong> 从返回的响应对象中提取出生成的文本内容。</li>
+<li><strong>接口函数</strong> 调用另一个辅助函数 <code>preprocess_string</code> 对文本进行<strong>清理</strong>，例如，移除代码块标记 (<code>python ... </code>) 或其他无关文字，只留下纯粹的代码。</li>
+<li><strong>接口函数</strong> 最终将清理好的代码字符串返回给**程序员智能体 (PA)**。</li>
+</ol>
+<p><strong>代码层面的深入了解:</strong></p>
+<p>让我们看看 <code>utils.py</code> 文件中实现这些接口函数的关键部分。</p>
+<p><strong>1. 初始化和 API 配置</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># utils.py (片段)</span>
+<span class="token keyword">import</span> openai
+<span class="token keyword">import</span> json
+<span class="token comment"># ... 其他导入 ...</span>
+
+<span class="token comment"># === 配置 OpenAI API ===</span>
+<span class="token comment"># 设置 API 端点 (这里可能使用了代理)</span>
+openai<span class="token punctuation">.</span>api_base <span class="token operator">=</span> <span class="token string">"https://api.aiohub.org/v1"</span>
+<span class="token comment"># 设置你的 API 密钥 (重要：实际项目中应从环境变量或配置文件安全加载)</span>
+openai<span class="token punctuation">.</span>api_key <span class="token operator">=</span> <span class="token string">'YOUR-API-KEY-HERE'</span>
+<span class="token comment"># 选择要使用的 LLM 模型</span>
+model <span class="token operator">=</span> <span class="token string">"gpt-4o"</span> <span class="token comment"># 或者 "gpt-3.5-turbo-1106"</span>
+
+<span class="token comment"># === 加载 Few-Shot 提示模板 ===</span>
+<span class="token comment"># 从文件中读取预设的提示模板，用于指导 LLM 更好地生成代码</span>
+prompt_path <span class="token operator">=</span> <span class="token string">"./prompts_fewshot/coder_agent_prompt.txt"</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>prompt_path<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    construct_few_shot_prompt <span class="token operator">=</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 这个变量包含了复杂的模板内容</span>
+
+<span class="token comment"># ... (其他模板加载，如用于 Fuzzing 的) ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>导入 <code>openai</code> 库。</li>
+<li>设置 <code>api_base</code> 和 <code>api_key</code>。<code>api_key</code> 是访问 OpenAI 服务的凭证，非常重要，<strong>绝不能直接硬编码在代码中</strong>（示例中仅为演示，实际应使用更安全的方式管理）。<code>api_base</code> 可能指向 OpenAI 官方地址或一个代理服务器。</li>
+<li>指定要调用的 <code>model</code>。</li>
+<li>从外部文件 (<code>.txt</code>) 加载复杂的<strong>提示模板</strong>。这些模板通常包含详细的指令和几个输入&#x2F;输出示例（Few-Shot），能显著提高 LLM 理解任务和生成高质量结果的能力。这是 Prompt Engineering 的一部分。</li>
+</ul>
+<p><strong>2. 调用 LLM 的核心函数 (以 <code>call_chatgpt_programmer</code> 为例)</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># utils.py (片段)</span>
+<span class="token keyword">def</span> <span class="token function">call_chatgpt_programmer</span><span class="token punctuation">(</span>prompt<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment"># === 构建最终发送给 LLM 的完整提示 ===</span>
+    <span class="token comment"># 将用户传入的简单 prompt 嵌入到复杂的 Few-Shot 模板中</span>
+    text <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f""</span></span>"
+    <span class="token punctuation">&#123;</span>construct_few_shot_prompt<span class="token punctuation">&#125;</span> <span class="token comment"># &lt;&lt;&lt;--- 使用加载的模板</span>
+
+    <span class="token operator">**</span>Input Code Snippet<span class="token operator">**</span><span class="token punctuation">:</span>
+    ```python
+    <span class="token punctuation">&#123;</span>prompt<span class="token punctuation">&#125;</span> <span class="token comment"># &lt;&lt;&lt;--- 嵌入用户的具体需求</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>## Completion 3:
+&quot;&quot;&quot;
+
+try:
+    # === 调用 OpenAI API ===
+    completion = openai.chat.completions.create(
+        model=model, # 使用预设的模型
+        stream=False, # 非流式传输，一次性获取完整结果
+        messages=[
+            &#123;&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a software programmer.&quot;&#125;, # 系统角色提示
+            &#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: text&#125;, # 用户角色，包含完整提示
+        ]
+    )
+    # === 提取和处理响应 ===
+    # 从返回结果中获取 LLM 生成的文本内容
+    response_text = completion.choices[0].message.content.strip()
+    # 调用清理函数，移除代码块标记等
+    cleaned_code = preprocess_string(response_text, &quot;python&quot;)
+
+except Exception as e:
+    # 简单的错误处理，实际应用中应更健壮
+    print(e)
+    cleaned_code = &quot;&quot; # 出错时返回空字符串
+
+# 返回清理后的代码
+return cleaned_code
+</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">
+**代码解释:**
+
+*   **构建提示**: 函数接收用户简单的 &#96;prompt&#96;，然后使用 f-string 将其插入到之前加载的 &#96;construct_few_shot_prompt&#96; 模板中，形成最终发送给 LLM 的 &#96;text&#96;。
+*   **调用 API**: 使用 &#96;openai.chat.completions.create()&#96; 方法。
+    *   &#96;model&#96;: 指定要用的模型。
+    *   &#96;stream&#x3D;False&#96;: 表示等待模型生成完整响应后再返回。
+    *   &#96;messages&#96;: 这是与 Chat 模型交互的标准格式，包含一个或多个字典，每个字典代表一个角色（&#96;system&#96;, &#96;user&#96;, &#96;assistant&#96;）及其说的话。这里我们设置了系统角色，并将我们精心构建的完整提示 &#96;text&#96; 作为用户输入。
+*   **提取响应**: API 调用成功后，结果在 &#96;completion.choices[0].message.content&#96; 中。我们使用 &#96;.strip()&#96; 去除首尾空白。
+*   **清理响应**: 调用 &#96;preprocess_string(response_text, &quot;python&quot;)&#96; 来处理这段文本。
+*   **错误处理**: 使用 &#96;try...except&#96; 捕获 API 调用过程中可能发生的异常（如网络问题、认证失败等），并进行简单的处理。
+*   **返回结果**: 返回清理后的代码字符串。
+
+**3. 清理响应的辅助函数 (&#96;preprocess_string&#96;)**
+
+​&#96;&#96;&#96;python
+# utils.py (片段)
+def preprocess_string(input_string, lg): # lg 通常是 &#39;python&#39;
+    # 检查字符串是否包含代码块标记，如 &#96;&#96;&#96;python
+    if f&quot;&#96;&#96;&#96;&#123;lg&#125;&quot; in input_string:
+        # 如果有，找到标记后的代码开始位置
+        input_string &#x3D; input_string[input_string.find(f&quot;&#96;&#96;&#96;&#123;lg&#125;&quot;) + len(f&quot;&#96;&#96;&#96;&#123;lg&#125;&quot;):]
+        # 找到代码块结束标记 &#96;&#96;&#96; 的位置
+        input_string &#x3D; input_string[:input_string.find(&quot;&#96;&#96;&#96;&quot;)]
+    # 如果只有通用的 &#96;&#96;&#96; 标记
+    elif &quot;&#96;&#96;&#96;&quot; in input_string:
+        input_string &#x3D; input_string[input_string.find(&quot;&#96;&#96;&#96;&quot;) + 3:]
+        input_string &#x3D; input_string[:input_string.find(&quot;&#96;&#96;&#96;&quot;)]
+
+    # 返回处理后的字符串 (理论上只包含代码)
+    return input_string<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>这个函数专门用来处理 LLM 返回的文本，目的是从中提取出纯净的代码。</li>
+<li>它检查输入字符串中是否包含 Markdown 风格的代码块标记（比如 <code>python ... </code> 或 <code>...</code>）。</li>
+<li>如果找到这些标记，它会精确地提取出标记之间的内容，丢弃标记本身以及标记之外的任何解释性文字。</li>
+<li>这确保了调用接口函数后得到的是可以直接使用的代码，而不是混杂着自然语言的文本。</li>
+</ul>
+<p>其他的接口函数（如 <code>call_chatgpt_analyze_static_security</code>, <code>call_chatgpt_programmer_feedback_static</code>, <code>call_chatgpt_fuzzing_tester</code> 等）都遵循类似的模式：接收来自智能体的简单输入 -&gt; 构建复杂的提示 -&gt; 调用 OpenAI API -&gt; 清理并返回结果。它们之间的主要区别在于使用的<strong>提示模板</strong>不同，以及传递给 API 的具体内容不同，以适应各自的任务需求（代码生成、安全分析、测试输入生成等）。</p>
+<p>这些位于 <code>utils.py</code> 的函数共同构成了 AutoSafeCoder 与大语言模型之间的桥梁，使得复杂的 AI 调用变得简单而一致。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本章中，我们认识了 AutoSafeCoder 的“外交部”和“翻译团队”——**大语言模型交互接口 (Large Language Model Interaction Interface)**。我们学到了：</p>
+<ul>
+<li>它的核心作用是<strong>封装与外部大语言模型（如 GPT）通信的复杂细节</strong>，为内部智能体提供简单易用的调用方式。</li>
+<li>它负责<strong>构建符合 LLM 要求的提示</strong>、<strong>发送 API 请求</strong>、<strong>接收响应</strong>并<strong>清理结果</strong>。</li>
+<li>在 AutoSafeCoder 项目中，这个接口主要由 <code>utils.py</code> 文件中的一系列<strong>工具函数</strong>（如 <code>call_chatgpt_programmer</code>, <code>call_chatgpt_analyze_static_security</code> 等）实现。</li>
+<li>其他智能体（如<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>）通过调用这些 <code>utils.py</code> 中的函数来完成与 LLM 的交互，无需关心底层的 API 细节。</li>
+<li>我们通过流程图和代码分析，了解了这些接口函数内部的关键步骤：加载提示模板、构建完整提示、调用 <code>openai</code> 库、提取并使用 <code>preprocess_string</code> 清理响应。</li>
+</ul>
+<p>这个交互接口是 AutoSafeCoder 能够利用先进 AI 模型能力的关键组件，它让复杂的 LLM 调用变得像调用普通函数一样简单。</p>
+<p>至此，我们已经探索了 AutoSafeCoder 项目的所有主要组成部分：从负责协调的<a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架</a>，到负责具体任务的<a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>、<a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>、<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a>和<a href="05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__.md">执行器</a>，再到保障运行安全的<a href="06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__.md">安全代码执行环境</a>，以及连接 AI 大脑的本章内容——<a href="07_%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E4%BA%A4%E4%BA%92%E6%8E%A5%E5%8F%A3__large_language_model_interaction_interface__.md">大语言模型交互接口</a>。</p>
+<p>希望这个系列教程能帮助你理解 AutoSafeCoder 的基本工作原理和各个组件的作用。虽然我们介绍的是简化的概念和代码，但它为你深入研究项目源代码、甚至尝试改进和扩展它打下了基础。祝你在探索 AI 驱动的安全编码世界中旅途愉快！</p>
+<hr>
+<p>Generated by <a target="_blank" rel="noopener" href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+
+    
+    <a href="/2025/04/27/05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>AutoSafeCoder-Fuzzing Executor</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		
+<div class="footer">
+	<div class="Copyright">
+		©2025 By ChenSir. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+
+
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+</html>
+

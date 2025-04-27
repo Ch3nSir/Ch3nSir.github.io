@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>AutoSafeCoder-Multi-Agent Collaboration Framework-ChenSir's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="UESTC,">
+<meta name="description" content="genshin impart">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.initHighlightingOnLoad();</script>
+
+	<meta name="generator" content="Hexo 6.2.0"></head>
+
+	<body>
+		
+	<div class="header">
+		<div class="header-top" id="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										HOME
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										ARCHIVE
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										CATEGORIES
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										TAGS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										LINKS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										ABOUT
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>ChenSir</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">HOME</a>
+        </li>
+        
+        <li>
+            <a href="/archives">ARCHIVE</a>
+        </li>
+        
+        <li>
+            <a href="/categories">CATEGORIES</a>
+        </li>
+        
+        <li>
+            <a href="/tags">TAGS</a>
+        </li>
+        
+        <li>
+            <a href="/links">LINKS</a>
+        </li>
+        
+        <li>
+            <a href="/about">ABOUT</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					width: "66%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					width: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/UESTC">UESTC</a></li>
+            
+            
+        </ul>
+        
+        <h1>AutoSafeCoder-Multi-Agent Collaboration Framework</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">ChenSir</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/UESTC/" target="_blank" >UESTC</a>
+                    
+                </div>
+                <p>2025-04-27 00:00:01</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h1 id="Chapter-1-多智能体协作框架-Multi-Agent-Collaboration-Framework"><a href="#Chapter-1-多智能体协作框架-Multi-Agent-Collaboration-Framework" class="headerlink" title="Chapter 1: 多智能体协作框架 (Multi-Agent Collaboration Framework)"></a>Chapter 1: 多智能体协作框架 (Multi-Agent Collaboration Framework)</h1><p>欢迎来到 AutoSafeCoder 的世界！这是一个旨在帮助我们自动生成更安全代码的工具。在本教程中，我们将一步步探索 AutoSafeCoder 的各个组成部分。</p>
+<p>想象一下，你想建造一座既坚固又漂亮的房子。你可能需要一个建筑师来设计蓝图，一个施工队来建造，一个质检员来检查结构安全，还有一个室内设计师来美化。每个人都有自己的专长，但你需要一个<strong>项目经理</strong>来协调他们，确保他们按计划合作，最终交付完美的房子。</p>
+<p>在 AutoSafeCoder 中，我们也有类似的角色。我们想自动生成代码，并且希望这些代码是安全的，不容易被攻击。为了实现这个目标，我们需要不同的“专家”来分工合作。而我们今天要认识的<strong>多智能体协作框架 (Multi-Agent Collaboration Framework)</strong> ，就扮演着这个“项目经理”的角色。</p>
+<h2 id="什么是多智能体协作框架？"><a href="#什么是多智能体协作框架？" class="headerlink" title="什么是多智能体协作框架？"></a>什么是多智能体协作框架？</h2><p>简单来说，<strong>多智能体协作框架</strong>是 AutoSafeCoder 的“大脑”和“总指挥”。它本身不直接编写代码或进行安全检查，但它负责<strong>组织和管理</strong>项目中的其他“智能体”（Agent）。</p>
+<p>把它想象成一个软件开发项目的<strong>项目经理</strong>或一个电影剧组的<strong>导演</strong>。导演不会亲自去演戏、拍摄或剪辑，但他会指导演员怎么演，摄影师怎么拍，剪辑师怎么剪，确保所有部分完美地组合在一起，最终呈现一部精彩的电影。</p>
+<p>这个框架协调以下主要成员（我们将在后续章节详细了解它们）：</p>
+<ol>
+<li><a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md"><strong>程序员智能体 (Programmer Agent)</strong></a>：负责根据需求编写代码。</li>
+<li><a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md"><strong>静态安全分析器 (Static Security Analyzer)</strong></a>：像代码审查员一样，检查代码中是否存在已知的安全漏洞模式，但它不实际运行代码。</li>
+<li><a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md"><strong>模糊测试智能体们</strong></a> (<a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a> 和 <a href="05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__.md">模糊测试执行器</a>)：像测试工程师一样，生成各种意想不到的输入数据来运行代码，看看代码在压力下是否会崩溃或表现异常。</li>
+</ol>
+<p>框架的核心任务就是确保这些智能体在正确的时间做正确的事，并将它们的成果（比如代码、分析报告、测试结果）有效地传递给下一个环节，最终目标是生成既能工作又相对安全的代码。</p>
+<h2 id="框架如何协调工作？（概览）"><a href="#框架如何协调工作？（概览）" class="headerlink" title="框架如何协调工作？（概览）"></a>框架如何协调工作？（概览）</h2><p>让我们通过一个简单的例子，看看这个框架是如何运作的：</p>
+<ol>
+<li><strong>接收任务</strong>: 框架收到一个编程任务，比如“编写一个计算器函数，实现加法操作”。</li>
+<li><strong>编写初稿</strong>: 框架指示 <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>：“请根据这个需求编写代码。” 程序员智能体生成了第一版代码。</li>
+<li><strong>静态检查</strong>: 框架拿到代码后，转交给 <a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>：“请检查这份代码有没有明显的安全问题。” 分析器可能会报告：“发现一个潜在的整数溢出风险。”</li>
+<li><strong>反馈与修改 (循环)</strong>: 如果发现了问题，框架会把分析报告反馈给 <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>：“根据这个报告修改代码。” 这个过程可能会重复几次，直到静态分析器满意为止。</li>
+<li><strong>动态测试 (模糊测试)</strong>: 静态检查通过后，框架启动模糊测试流程。它让 <a href="04_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E8%BE%93%E5%85%A5%E7%94%9F%E6%88%90%E5%99%A8__fuzzing_input_generator__.md">模糊测试输入生成器</a> 生成一些测试数据（可能是正常的，也可能是奇怪的、边缘的数据），然后让 <a href="05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__.md">模糊测试执行器</a> 用这些数据去运行代码。</li>
+<li><strong>反馈与修改 (循环)</strong>: 如果在模糊测试中代码崩溃了或出错了，框架会记录下导致问题的输入，并反馈给 <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">程序员智能体</a>：“代码在这些输入下出错了，请修复。” 这个过程也可能重复。</li>
+<li><strong>完成</strong>: 经过静态分析和模糊测试的考验，代码变得更加健壮和安全。框架最终输出这份经过多轮打磨的代码。</li>
+</ol>
+<p>整个过程就像一个严谨的生产流水线，框架确保每个环节都顺利进行，并且信息在不同工位（智能体）之间有效流转。</p>
+<h2 id="如何使用这个框架？"><a href="#如何使用这个框架？" class="headerlink" title="如何使用这个框架？"></a>如何使用这个框架？</h2><p>在 AutoSafeCoder 项目中，<code>main.py</code> 文件是启动整个流程的入口。我们可以通过创建一个 <code>MultiAgentSystem</code> 对象并调用它的 <code>run()</code> 方法来启动这个协作框架。</p>
+<p>假设我们有一个编程任务 <code>entry</code>，它包含了任务的描述、ID 等信息。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (简化示例)</span>
+<span class="token keyword">from</span> programmer_agent <span class="token keyword">import</span> ProgrammerAgent
+<span class="token keyword">from</span> tester_fuzz_agent <span class="token keyword">import</span> TesterFuzzAgent
+<span class="token keyword">from</span> executor_static <span class="token keyword">import</span> ExecutorStaticAgent
+<span class="token comment"># ... 其他导入 ...</span>
+<span class="token keyword">import</span> json
+
+<span class="token comment"># 定义多智能体系统类</span>
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> entry<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 初始化各个智能体，传入任务信息</span>
+        self<span class="token punctuation">.</span>programmer_agent <span class="token operator">=</span> ProgrammerAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tester_fuzz_agent <span class="token operator">=</span> TesterFuzzAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>executor_static <span class="token operator">=</span> ExecutorStaticAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+        <span class="token comment"># ... 可能还有其他智能体的初始化 ...</span>
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 用于存储当前代码</span>
+
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">120</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"开始处理任务: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>entry<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'ID'</span><span class="token punctuation">,</span> <span class="token string">'未知任务'</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token comment"># 1. 让程序员智能体写代码 (调用 Programmer Agent)</span>
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> self<span class="token punctuation">.</span>programmer_agent<span class="token punctuation">.</span>write_code<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"程序员智能体生成了初始代码。"</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># 2. 进行静态分析 (调用 Static Analyzer Agent)</span>
+        <span class="token comment">#    并根据反馈让程序员修改 (循环)</span>
+        <span class="token comment">#    (此处简化，实际代码有循环和错误处理)</span>
+        result<span class="token punctuation">,</span> error_desc <span class="token operator">=</span> self<span class="token punctuation">.</span>executor_static<span class="token punctuation">.</span>execute_static_analysis_gpt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>code<span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"静态分析结果: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+        <span class="token comment"># 3. 进行模糊测试 (调用 Fuzzing Agents)</span>
+        <span class="token comment">#    并根据反馈让程序员修改 (循环)</span>
+        <span class="token comment">#    (此处简化，实际代码有生成输入、执行、变异、反馈循环)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"开始模糊测试..."</span><span class="token punctuation">)</span>
+        <span class="token comment"># ... 模糊测试逻辑 ...</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"模糊测试完成。"</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># 4. 保存最终结果</span>
+        <span class="token comment">#    (实际代码会将结果保存到 results.json 文件)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"任务完成，保存结果。"</span><span class="token punctuation">)</span>
+        <span class="token comment"># ... 保存结果到文件 ...</span>
+
+<span class="token comment"># --- 主程序入口 ---</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    <span class="token comment"># 假设我们从某个地方加载了一个任务 'entry'</span>
+    <span class="token comment"># entry 通常是一个字典，包含任务ID、描述等</span>
+    <span class="token comment"># 例如: entry = &#123;'ID': 'task1', 'prompt': '写一个加法函数'&#125;</span>
+    <span class="token comment"># (实际代码会从数据集加载)</span>
+    example_entry <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'ID'</span><span class="token punctuation">:</span> <span class="token string">'ExampleTask'</span><span class="token punctuation">,</span> <span class="token string">'prompt'</span><span class="token punctuation">:</span> <span class="token string">'编写一个简单的Python函数，计算两个整数的和。'</span><span class="token punctuation">&#125;</span>
+
+    <span class="token comment"># 创建多智能体系统实例</span>
+    system <span class="token operator">=</span> MultiAgentSystem<span class="token punctuation">(</span>example_entry<span class="token punctuation">)</span>
+
+    <span class="token comment"># 运行协作流程</span>
+    system<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ol>
+<li>我们首先导入了需要的智能体类（<code>ProgrammerAgent</code>, <code>TesterFuzzAgent</code>, <code>ExecutorStaticAgent</code> 等）。</li>
+<li><code>MultiAgentSystem</code> 类是我们的核心框架。在 <code>__init__</code> 方法中，它会创建各个智能体的实例，相当于把项目经理手下的团队成员都召集起来。</li>
+<li><code>run()</code> 方法是执行整个工作流的地方。它按照预定的顺序调用不同智能体的方法：先让程序员写代码 (<code>write_code</code>)，然后让静态分析器检查 (<code>execute_static_analysis_gpt</code>)，接着进行模糊测试（代码中简化了这部分），最后保存结果。</li>
+<li>在主程序部分 (<code>if __name__ == &quot;__main__&quot;:</code>)，我们创建了一个 <code>MultiAgentSystem</code> 的实例 <code>system</code>，并传入了一个示例任务 <code>example_entry</code>。</li>
+<li>最后，调用 <code>system.run()</code> 就启动了整个自动化代码生成和安全加固的流程。</li>
+</ol>
+<p>当你运行这段代码时，它会模拟（或实际执行）智能体之间的协作，最终目标是输出一份经过安全检查和测试的代码。虽然上面的示例代码做了很多简化，但它展示了框架的基本使用方式：<strong>创建一个系统实例，然后运行它</strong>。</p>
+<h2 id="框架内部是如何工作的？"><a href="#框架内部是如何工作的？" class="headerlink" title="框架内部是如何工作的？"></a>框架内部是如何工作的？</h2><p>我们已经知道了框架的作用和如何使用它，现在稍微深入一点，看看 <code>run()</code> 方法被调用后，内部大致发生了什么。</p>
+<p><strong>非代码流程图解:</strong></p>
+<p>想象一下用户（或者 <code>main.py</code> 的主程序）启动了 <code>MultiAgentSystem</code> 的 <code>run()</code> 方法。</p>
+<pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
+    <span class="token keyword">participant</span> 用户 as 用户/主程序
+    <span class="token keyword">participant</span> MAS as 多智能体协作框架 <span class="token text string">(MultiAgentSystem)</span>
+    <span class="token keyword">participant</span> PA as 程序员智能体 <span class="token text string">(ProgrammerAgent)</span>
+    <span class="token keyword">participant</span> SA as 静态分析器 <span class="token text string">(StaticAnalyzerAgent)</span>
+    <span class="token keyword">participant</span> FA as 模糊测试智能体 <span class="token text string">(Fuzzing Agents)</span>
+
+    用户<span class="token arrow operator">->></span>MAS<span class="token operator">:</span> 调用 run<span class="token text string">(任务信息)</span>
+    MAS<span class="token arrow operator">->></span>PA<span class="token operator">:</span> 请求编写代码<span class="token text string">(任务信息)</span>
+    PA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回初始代码
+    MAS<span class="token arrow operator">->></span>SA<span class="token operator">:</span> 请求静态分析<span class="token text string">(初始代码)</span>
+    SA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回分析结果 <span class="token text string">(例如：发现问题)</span>
+    <span class="token keyword">Note right of</span> MAS<span class="token operator">:</span> 如果有问题，进入反馈循环
+    MAS<span class="token arrow operator">->></span>PA<span class="token operator">:</span> 请求修改代码<span class="token text string">(代码, 问题描述)</span>
+    PA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回修改后的代码
+    MAS<span class="token arrow operator">->></span>SA<span class="token operator">:</span> 再次请求静态分析<span class="token text string">(修改后代码)</span>
+    SA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回分析结果 <span class="token text string">(例如：通过)</span>
+    MAS<span class="token arrow operator">->></span>FA<span class="token operator">:</span> 请求进行模糊测试<span class="token text string">(代码)</span>
+    FA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回测试结果 <span class="token text string">(例如：发现崩溃)</span>
+    <span class="token keyword">Note right of</span> MAS<span class="token operator">:</span> 如果有问题，进入反馈循环
+    MAS<span class="token arrow operator">->></span>PA<span class="token operator">:</span> 请求修复代码<span class="token text string">(代码, 崩溃信息)</span>
+    PA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回修复后的代码
+    MAS<span class="token arrow operator">->></span>FA<span class="token operator">:</span> 再次请求模糊测试<span class="token text string">(修复后代码)</span>
+    FA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回测试结果 <span class="token text string">(例如：通过)</span>
+    MAS<span class="token arrow operator">-->></span>用户<span class="token operator">:</span> <span class="token text string">(将最终代码和结果保存到文件)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这个图展示了框架如何在不同的智能体之间传递信息（代码、分析报告、测试结果）并指导它们按顺序工作。它像一个调度中心，确保流程顺畅。</p>
+<p><strong>代码层面的深入了解:</strong></p>
+<p>让我们再看看 <code>main.py</code> 中 <code>MultiAgentSystem</code> 类的一些关键部分。</p>
+<p><strong>1. 初始化 (<code>__init__</code>)</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (片段)</span>
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> entry<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 接收任务描述 'entry'</span>
+        <span class="token comment"># 为每个需要的智能体创建实例</span>
+        <span class="token comment"># 这就像项目经理组建他的团队</span>
+        self<span class="token punctuation">.</span>programmer_agent <span class="token operator">=</span> ProgrammerAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tester_fuzz_agent <span class="token operator">=</span> TesterFuzzAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span> <span class="token comment"># 用于生成初始模糊测试输入</span>
+        self<span class="token punctuation">.</span>executor_static <span class="token operator">=</span> ExecutorStaticAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span> <span class="token comment"># 用于执行静态分析</span>
+        <span class="token comment"># 注意: 模糊测试的执行和输入变异可能由其他类或函数处理</span>
+        <span class="token comment"># 例如 InputMutatorAgent 和 execute_fuzz 函数</span>
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 用来存储当前正在处理的代码</span>
+        self<span class="token punctuation">.</span>test_inputs <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 用来存储当前的测试输入</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>当创建 <code>MultiAgentSystem</code> 对象时 (<code>system = MultiAgentSystem(example_entry)</code>)，<code>__init__</code> 方法会被调用。</li>
+<li>它接收任务信息 <code>entry</code>。</li>
+<li>然后，它会创建项目中需要的各个智能体类的实例，并将 <code>entry</code> 传递给它们（因为智能体可能需要任务信息来完成工作）。</li>
+<li>这样，框架内部就持有了对所有协作智能体的引用，方便后续调用它们的方法。</li>
+</ul>
+<p><strong>2. 运行核心逻辑 (<code>run</code>)</strong></p>
+<p><code>run</code> 方法是整个协作流程的核心，它编排了智能体之间的交互。我们来看一个稍微详细一点但仍然简化的版本：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (run 方法简化片段)</span>
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token comment"># ... (init 方法省略) ...</span>
+
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">120</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># iterations 是模糊测试的轮数</span>
+        <span class="token comment"># === 第 1 步: 程序员编写初始代码 ===</span>
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> self<span class="token punctuation">.</span>programmer_agent<span class="token punctuation">.</span>write_code<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"初始代码已生成:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">.</span>code<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">100]</span><span class="token punctuation">&#125;</span></span><span class="token string">..."</span></span><span class="token punctuation">)</span> <span class="token comment"># 打印部分代码</span>
+
+        <span class="token comment"># === 第 2 步: 静态分析与反馈循环 ===</span>
+        static_analysis_status <span class="token operator">=</span> <span class="token string">'未知'</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 最多尝试修复4次</span>
+            result<span class="token punctuation">,</span> error_description <span class="token operator">=</span> self<span class="token punctuation">.</span>executor_static<span class="token punctuation">.</span>execute_static_analysis_gpt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>code<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"静态分析尝试 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span></span><span class="token string">: 结果 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>result<span class="token punctuation">.</span>name<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+            <span class="token keyword">if</span> result<span class="token punctuation">.</span>name <span class="token operator">==</span> FResult<span class="token punctuation">.</span>SAFE<span class="token punctuation">.</span>name<span class="token punctuation">:</span> <span class="token comment"># 假设 FResult.SAFE 表示安全</span>
+                static_analysis_status <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'成功 (尝试 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">&#125;</span></span><span class="token string"> 次)'</span></span>
+                <span class="token keyword">break</span> <span class="token comment"># 如果安全，跳出循环</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token comment"># 如果不安全，让程序员根据反馈修改代码</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"发现静态分析问题: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_description<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">100]</span><span class="token punctuation">&#125;</span></span><span class="token string">..."</span></span><span class="token punctuation">)</span>
+                self<span class="token punctuation">.</span>code <span class="token operator">=</span> self<span class="token punctuation">.</span>programmer_agent<span class="token punctuation">.</span>write_code_feedback_static<span class="token punctuation">(</span>self<span class="token punctuation">.</span>code<span class="token punctuation">,</span> error_description<span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span> <span class="token comment"># for 循环正常结束 (意味着4次都没修复)</span>
+             static_analysis_status <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'失败: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>error_description<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">100]</span><span class="token punctuation">&#125;</span></span><span class="token string">...'</span></span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"静态分析最终状态: </span><span class="token interpolation"><span class="token punctuation">&#123;</span>static_analysis_status<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"静态分析后的代码:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">.</span>code<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">100]</span><span class="token punctuation">&#125;</span></span><span class="token string">..."</span></span><span class="token punctuation">)</span>
+
+        <span class="token comment"># === 第 3 &amp; 4 步: 模糊测试与反馈循环 ===</span>
+        <span class="token comment"># (这里的代码也经过大幅简化)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"开始模糊测试流程..."</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>test_inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>tester_fuzz_agent<span class="token punctuation">.</span>generate_test_inputs<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 生成初始输入</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>test_inputs<span class="token punctuation">:</span>
+            failed_inputs_fuzz <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># 记录失败的测试用例</span>
+            <span class="token comment"># 模拟执行和变异循环 (实际代码更复杂)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"运行 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>iterations<span class="token punctuation">&#125;</span></span><span class="token string"> 轮模糊测试..."</span></span><span class="token punctuation">)</span>
+            <span class="token comment"># ... (调用 execute_fuzz, InputMutatorAgent.mutate_inputs 等) ...</span>
+            <span class="token comment"># 假设发现了一些失败用例 failed_inputs_fuzz</span>
+
+            <span class="token keyword">if</span> failed_inputs_fuzz<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"模糊测试发现问题，尝试修复..."</span><span class="token punctuation">)</span>
+                <span class="token comment"># ... (调用 programmer_agent.write_code_feedback_fuzz 进行修复循环) ...</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"模糊测试未发现问题。"</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"未能生成模糊测试输入。"</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># === 第 5 步: 保存结果 ===</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"流程结束，准备保存结果..."</span><span class="token punctuation">)</span>
+        <span class="token comment"># ... (将 self.code 和测试状态写入 results.json 文件) ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li><code>run</code> 方法首先调用 <code>programmer_agent.write_code()</code> 获取初始代码。</li>
+<li>然后进入一个循环，调用 <code>executor_static.execute_static_analysis_gpt()</code> 进行静态检查。</li>
+<li>如果静态检查发现问题 (<code>result.name != FResult.SAFE.name</code>)，它会调用 <code>programmer_agent.write_code_feedback_static()</code>，把当前代码和错误描述传给程序员智能体，让它尝试修复。这个过程会重复几次。</li>
+<li>静态分析通过后，接着是模糊测试阶段。它调用 <code>tester_fuzz_agent.generate_test_inputs()</code> 获取初始测试用例，然后在循环中（这里简化了）模拟运行代码 (<code>execute_fuzz</code>)、变异输入 (<code>InputMutatorAgent.mutate_inputs</code>)。</li>
+<li>如果在模糊测试中发现错误，同样会进入一个反馈循环，调用 <code>programmer_agent.write_code_feedback_fuzz()</code> 让程序员智能体尝试修复。</li>
+<li>最后，无论结果如何，框架都会将最终的代码和整个过程的状态（静态分析是否成功、模糊测试是否成功等）记录下来（通常是保存到 <code>results.json</code> 文件中）。</li>
+</ul>
+<p>通过这种方式，<strong>多智能体协作框架</strong>就像一个勤奋的项目经理，不断地在不同专家（智能体）之间传递任务和反馈，推动项目（安全代码生成）一步步向前，直到达到预设的目标或尝试次数耗尽。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本章中，我们认识了 AutoSafeCoder 项目的核心协调者——<strong>多智能体协作框架</strong>。我们了解到：</p>
+<ul>
+<li>它扮演着“项目经理”或“导演”的角色，负责组织和管理其他专门的智能体。</li>
+<li>它的目标是引导不同的智能体（程序员、静态分析器、模糊测试器等）按顺序、协作地工作，完成从代码生成到安全加固的整个流程。</li>
+<li>我们通过一个简化的例子看到了它是如何按步骤协调工作的：写代码 -&gt; 静态检查 -&gt; 反馈修改 -&gt; 模糊测试 -&gt; 反馈修改 -&gt; 输出结果。</li>
+<li>我们学习了如何通过创建 <code>MultiAgentSystem</code> 类的实例并调用其 <code>run</code> 方法来启动这个框架。</li>
+<li>我们还通过流程图和简化的代码片段，了解了框架内部是如何调用不同智能体的方法，并在它们之间传递信息的。</li>
+</ul>
+<p>这个框架是 AutoSafeCoder 的基础。理解了它的协调作用，我们就能更好地理解后续章节中介绍的各个智能体是如何融入这个体系并发挥各自作用的。</p>
+<p>接下来，我们将深入了解这个框架协调的第一个重要成员。</p>
+<p><strong>下一章预告:</strong> <a href="02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__.md">第 2 章：程序员智能体 (Programmer Agent)</a> - 探索负责编写和修改代码的智能体是如何工作的。</p>
+<hr>
+<p>Generated by <a target="_blank" rel="noopener" href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2025/04/27/02_%E7%A8%8B%E5%BA%8F%E5%91%98%E6%99%BA%E8%83%BD%E4%BD%93__programmer_agent__/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>AutoSafeCoder-Programmer Agent</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2025/04/27/index/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>Tutorial-AutoSafeCoder!</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		
+<div class="footer">
+	<div class="Copyright">
+		©2025 By ChenSir. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+
+
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+</html>
+

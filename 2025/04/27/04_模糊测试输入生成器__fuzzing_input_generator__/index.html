@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>AutoSafeCoder-Fuzzing Input Generator-ChenSir's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="UESTC,">
+<meta name="description" content="genshin impart">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.initHighlightingOnLoad();</script>
+
+	<meta name="generator" content="Hexo 6.2.0"></head>
+
+	<body>
+		
+	<div class="header">
+		<div class="header-top" id="header-top">
+			<div class="h-left">
+				<a href="/">
+					<img src="/image/logo.png" alt="Quiet">
+				</a>
+			</div>
+			<div class="h-right">
+				<ul>
+					
+						
+								<li>
+									<a href="/">
+										HOME
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/archives">
+										ARCHIVE
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/categories">
+										CATEGORIES
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/tags">
+										TAGS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/links">
+										LINKS
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+						
+								<li>
+									<a href="/about">
+										ABOUT
+									</a>
+									<span class="dot"></span>
+								</li>
+								
+									
+				</ul>
+			</div>
+			<div class="h-right-close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+					<path fill="none" d="M0 0h24v24H0z" />
+					<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="sidebar">
+    <div class="topo">
+        <h2>ChenSir</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">HOME</a>
+        </li>
+        
+        <li>
+            <a href="/archives">ARCHIVE</a>
+        </li>
+        
+        <li>
+            <a href="/categories">CATEGORIES</a>
+        </li>
+        
+        <li>
+            <a href="/tags">TAGS</a>
+        </li>
+        
+        <li>
+            <a href="/links">LINKS</a>
+        </li>
+        
+        <li>
+            <a href="/about">ABOUT</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815)
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					width: "66%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					width: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/UESTC">UESTC</a></li>
+            
+            
+        </ul>
+        
+        <h1>AutoSafeCoder-Fuzzing Input Generator</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">ChenSir</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/UESTC/" target="_blank" >UESTC</a>
+                    
+                </div>
+                <p>2025-04-27 00:00:04</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h1 id="Chapter-4-模糊测试输入生成器-Fuzzing-Input-Generator"><a href="#Chapter-4-模糊测试输入生成器-Fuzzing-Input-Generator" class="headerlink" title="Chapter 4: 模糊测试输入生成器 (Fuzzing Input Generator)"></a>Chapter 4: 模糊测试输入生成器 (Fuzzing Input Generator)</h1><p>欢迎回来！在上一章 <a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">第 3 章：静态安全分析器 (Static Security Analyzer)</a> 中，我们认识了 AutoSafeCoder 的“代码安全检查员”。它像一个细心的侦探，在不运行代码的情况下，检查代码本身是否存在已知的安全漏洞。这非常有用，但还不够全面。</p>
+<p>想象一下，我们设计了一辆新玩具车。<a href="03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__.md">静态安全分析器</a>就像检查员，检查了玩具车的零件是否齐全、材料是否安全、结构是否符合设计图。但是，这辆玩具车在实际玩耍时表现如何呢？如果孩子们用奇怪的方式推它、撞它、甚至给它一些意想不到的“指令”，它会不会散架或者出现奇怪的行为？</p>
+<p>仅仅检查代码的“设计图”是不够的，我们还需要看看代码在实际运行时，面对各种<strong>意想不到的、甚至是“捣乱”的输入数据</strong>时，表现如何。这就是<strong>模糊测试 (Fuzzing)</strong> 的用武之地，而要进行模糊测试，我们首先需要有人来制造这些“捣乱”的数据。这就是我们今天要认识的**模糊测试输入生成器 (Fuzzing Input Generator)**。</p>
+<h2 id="什么是模糊测试输入生成器？"><a href="#什么是模糊测试输入生成器？" class="headerlink" title="什么是模糊测试输入生成器？"></a>什么是模糊测试输入生成器？</h2><p><strong>模糊测试输入生成器 (Fuzzing Input Generator)</strong> 是 AutoSafeCoder 团队中的“捣蛋鬼”或“创意工匠”。它的核心任务是为模糊测试过程<strong>创建大量的、多样化的测试输入数据</strong>。</p>
+<p>它的工作方式通常是：</p>
+<ol>
+<li><strong>从一个“种子”开始</strong>：它通常会从一个或一组已知的、有效的输入开始（这些初始输入可能由另一个专门的智能体，比如 <code>TesterFuzzAgent</code>，基于代码功能生成）。</li>
+<li><strong>进行“变异”</strong>：然后，它会对这些种子输入进行各种<strong>随机或半随机的修改和变形</strong>。这就像一个工匠，拿到一块正常的木头（原始输入），然后对其进行切割、打磨、拼接、甚至随机涂鸦，制造出各种奇形怪状的“零件”（新的测试输入）。</li>
+<li><strong>生成大量新输入</strong>：通过不断重复这个变异过程，它可以产生成百上千、甚至数百万个新的、可能看起来很奇怪的输入用例。</li>
+</ol>
+<p>这些“奇特”的输入数据正是我们想要的！它们的目标是去<strong>挑战代码处理边缘情况和异常情况的能力</strong>。比如：</p>
+<ul>
+<li>给一个需要数字的函数输入一个超大的数字、一个负数、零，甚至是一段文字。</li>
+<li>给一个需要特定格式字符串的函数输入一个空字符串、一个超长字符串、或者包含特殊字符的字符串。</li>
+<li>改变数据结构，比如把列表变成字典，或者在预期的地方传入 <code>None</code>。</li>
+</ul>
+<p>通过用这些由输入生成器制造的“捣乱”数据去运行代码，我们就能更容易地发现那些在正常使用情况下很难暴露出来的 Bug 或安全漏洞，比如程序崩溃、内存泄漏、或者意想不到的行为。</p>
+<h2 id="模糊测试输入生成器如何工作？（高层视角）"><a href="#模糊测试输入生成器如何工作？（高层视角）" class="headerlink" title="模糊测试输入生成器如何工作？（高层视角）"></a>模糊测试输入生成器如何工作？（高层视角）</h2><p>想象一下，我们有一个函数 <code>calculate_discount(price, percentage)</code>，用于计算折扣。</p>
+<ol>
+<li><strong>获取初始输入</strong>: 输入生成器可能先拿到一个正常的输入，比如 <code>&#123;&quot;price&quot;: 100, &quot;percentage&quot;: 0.1&#125;</code>。这可能是由 <code>TesterFuzzAgent</code> 生成的。</li>
+<li><strong>应用变异策略</strong>: 输入生成器（在 AutoSafeCoder 中由 <code>InputMutatorAgent</code> 负责后续变异）开始“捣乱”：<ul>
+<li><strong>改变数值</strong>: 把 <code>price</code> 改成 <code>999999999</code> (极大值)，改成 <code>-50</code> (负数)，改成 <code>0</code>。</li>
+<li><strong>改变类型</strong>: 把 <code>percentage</code> 从 <code>0.1</code> (浮点数) 改成 <code>&quot;ten percent&quot;</code> (字符串)。</li>
+<li><strong>边界值</strong>: 把 <code>percentage</code> 改成 <code>1.0</code> (100%折扣)，改成 <code>0.0</code>，改成 <code>1.1</code> (超过100%)。</li>
+<li><strong>结构变异</strong>: 把输入改成 <code>&#123;&quot;price&quot;: 100&#125;</code> (缺少 <code>percentage</code>)，或者 <code>&#123;&quot;price&quot;: 100, &quot;percentage&quot;: None&#125;</code>。</li>
+</ul>
+</li>
+<li><strong>输出新输入</strong>: 每一次变异都会产生一个新的测试输入，比如：<ul>
+<li><code>&#123;&quot;price&quot;: -50, &quot;percentage&quot;: 0.1&#125;</code></li>
+<li><code>&#123;&quot;price&quot;: 100, &quot;percentage&quot;: &quot;ten percent&quot;&#125;</code></li>
+<li><code>&#123;&quot;price&quot;: 100, &quot;percentage&quot;: 1.1&#125;</code></li>
+<li><code>&#123;&quot;price&quot;: 100&#125;</code></li>
+</ul>
+</li>
+</ol>
+<p>这些新产生的输入会被传递给下一个环节——<a href="05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__.md">模糊测试执行器 (Fuzzing Executor)</a>，用来实际运行被测试的代码。</p>
+<h2 id="如何使用模糊测试输入生成器？"><a href="#如何使用模糊测试输入生成器？" class="headerlink" title="如何使用模糊测试输入生成器？"></a>如何使用模糊测试输入生成器？</h2><p>在 AutoSafeCoder 中，生成模糊测试输入的过程主要涉及两个部分，它们都由<a href="01_%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%8D%8F%E4%BD%9C%E6%A1%86%E6%9E%B6__multi_agent_collaboration_framework__.md">多智能体协作框架 (Multi-Agent Collaboration Framework)</a>（即 <code>main.py</code> 中的 <code>MultiAgentSystem</code> 类）协调：</p>
+<ol>
+<li><strong>生成初始输入 (<code>TesterFuzzAgent</code>)</strong>: 在模糊测试开始时，框架首先需要一些“种子”输入。它会调用 <code>TesterFuzzAgent</code> 的 <code>generate_test_inputs</code> 方法来完成这一步。这个智能体可能会利用 LLM 分析代码功能来生成一些合理的初始测试用例。</li>
+<li><strong>变异现有输入 (<code>InputMutatorAgent</code>)</strong>: 在模糊测试的循环中，框架会使用 <code>InputMutatorAgent</code> 来对当前的输入进行变异，产生新的测试用例。这是“生成器”概念的核心体现。</li>
+</ol>
+<p>让我们看看 <code>main.py</code> 中框架是如何使用它们的：</p>
+<p><strong>1. 创建相关智能体实例</strong></p>
+<p>在 <code>MultiAgentSystem</code> 的初始化方法 <code>__init__</code> 中，会创建这些智能体的实例。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (片段)</span>
+<span class="token keyword">from</span> tester_fuzz_agent <span class="token keyword">import</span> TesterFuzzAgent <span class="token comment"># 用于生成初始输入</span>
+<span class="token keyword">from</span> fuzz_agent <span class="token keyword">import</span> InputMutatorAgent     <span class="token comment"># 用于变异输入</span>
+<span class="token comment"># ... 其他导入 ...</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> entry<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># ... 初始化 ProgrammerAgent 和 ExecutorStaticAgent ...</span>
+        <span class="token comment"># 创建 TesterFuzzAgent 实例</span>
+        self<span class="token punctuation">.</span>tester_fuzz_agent <span class="token operator">=</span> TesterFuzzAgent<span class="token punctuation">(</span>entry<span class="token punctuation">)</span>
+        <span class="token comment"># 注意: InputMutatorAgent 是在运行中根据当前输入创建的</span>
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> <span class="token boolean">None</span>
+        self<span class="token punctuation">.</span>test_inputs <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 用来存储当前的测试输入</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>我们从 <code>tester_fuzz_agent.py</code> 导入 <code>TesterFuzzAgent</code>。</li>
+<li>在 <code>MultiAgentSystem</code> 初始化时创建其实例 <code>self.tester_fuzz_agent</code>。</li>
+<li><code>InputMutatorAgent</code>（负责变异的智能体）通常不是在初始化时创建，而是在模糊测试循环内部，当需要对一组特定的输入进行变异时才创建。</li>
+</ul>
+<p><strong>2. 生成初始输入</strong></p>
+<p>框架在 <code>run</code> 方法的模糊测试部分，首先调用 <code>tester_fuzz_agent</code> 获取初始输入。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (run 方法片段 - 简化)</span>
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token comment"># ... (init 和 静态分析部分) ...</span>
+    <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> iterations<span class="token operator">=</span><span class="token number">120</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># ... (前面的代码) ...</span>
+        <span class="token comment"># === 第 3 步: Fuzzing Agent 生成初始测试输入 ===</span>
+        test_inputs_list <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token comment"># 调用 tester_fuzz_agent 的 generate_test_inputs 方法</span>
+        self<span class="token punctuation">.</span>test_inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>tester_fuzz_agent<span class="token punctuation">.</span>generate_test_inputs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">if</span> <span class="token keyword">not</span> self<span class="token punctuation">.</span>test_inputs<span class="token punctuation">:</span> <span class="token comment"># 如果未能生成输入</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"未能生成初始模糊测试输入，跳过动态测试。"</span><span class="token punctuation">)</span>
+            <span class="token comment"># ... (记录状态并返回) ...</span>
+            <span class="token keyword">return</span>
+
+        test_inputs_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>self<span class="token punctuation">.</span>test_inputs<span class="token punctuation">)</span> <span class="token comment"># 记录使用的输入</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"初始测试输入:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>self<span class="token punctuation">.</span>test_inputs<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+        <span class="token comment"># ... 后续模糊测试循环 ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li><code>self.tester_fuzz_agent.generate_test_inputs()</code> 会与 LLM 交互，尝试根据代码的功能生成一组初始的、可能有效的输入，并将其存储在 <code>self.test_inputs</code> 中。</li>
+<li>这些输入会被记录下来，并作为模糊测试的第一轮输入。</li>
+</ul>
+<p><strong>示例初始输入 (<code>self.test_inputs</code>):</strong></p>
+<p>假设代码是 <code>def add(a, b): return a + b</code>，初始输入可能是：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">&#123;</span><span class="token string">'a'</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>3. 在循环中变异输入</strong></p>
+<p>接着，框架进入一个循环，在每次迭代中，它会执行代码，然后调用 <code>InputMutatorAgent</code> 来生成下一轮的输入。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># main.py (run 方法片段 - 模糊测试循环简化)</span>
+<span class="token keyword">class</span> <span class="token class-name">MultiAgentSystem</span><span class="token punctuation">:</span>
+    <span class="token comment"># ... (前面的代码) ...</span>
+        <span class="token comment"># === 第 4 步: 执行和变异循环 ===</span>
+        failed_inputs_fuzz <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token comment"># 记录导致失败的输入</span>
+        current_inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>test_inputs <span class="token comment"># 从初始输入开始</span>
+        functionname <span class="token operator">=</span> <span class="token boolean">None</span> <span class="token comment"># 用于存储检测到的函数名</span>
+
+        <span class="token keyword">for</span> iteration <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>iterations<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 进行 N 轮模糊测试</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"\n模糊测试迭代 </span><span class="token interpolation"><span class="token punctuation">&#123;</span>iteration <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+            <span class="token comment"># 4a: 执行器用当前输入运行代码 (下一章内容)</span>
+            <span class="token comment"># result, passed, inputs_used, func_name = execute_fuzz(...)</span>
+            <span class="token comment"># (简化：假设我们拿到了执行结果和使用的输入/函数名)</span>
+            passed <span class="token operator">=</span> <span class="token boolean">True</span> <span class="token comment"># 假设本次执行通过</span>
+            inputs_used <span class="token operator">=</span> current_inputs
+            <span class="token comment"># (实际代码会从 execute_fuzz 获取 functionname)</span>
+            <span class="token comment"># functionname = func_name</span>
+
+            <span class="token keyword">if</span> <span class="token keyword">not</span> passed<span class="token punctuation">:</span>
+                 <span class="token comment"># 如果执行失败，记录失败信息 (省略)</span>
+                 failed_inputs_fuzz<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'inputs'</span><span class="token punctuation">:</span> inputs_used<span class="token punctuation">,</span> <span class="token string">'result'</span><span class="token punctuation">:</span> <span class="token string">'some error'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+
+            <span class="token comment"># 4b: 创建 InputMutatorAgent 并变异输入</span>
+            <span class="token comment"># 需要传入当前的输入、代码和函数名 (用于某些变异策略)</span>
+            mutator_agent <span class="token operator">=</span> InputMutatorAgent<span class="token punctuation">(</span>inputs_used<span class="token punctuation">,</span> self<span class="token punctuation">.</span>code<span class="token punctuation">,</span> functionname<span class="token punctuation">)</span>
+            current_inputs <span class="token operator">=</span> mutator_agent<span class="token punctuation">.</span>mutate_inputs<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 生成新的输入</span>
+
+            test_inputs_list<span class="token punctuation">.</span>append<span class="token punctuation">(</span>current_inputs<span class="token punctuation">)</span> <span class="token comment"># 记录新生成的输入</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"变异后的输入:\n</span><span class="token interpolation"><span class="token punctuation">&#123;</span>current_inputs<span class="token punctuation">&#125;</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+
+        <span class="token comment"># === 第 5 步: 处理模糊测试结果 (如果发现错误则反馈给程序员) ===</span>
+        <span class="token comment"># ... (省略) ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li>在每一轮循环的末尾，框架会创建一个 <code>InputMutatorAgent</code> 的实例。</li>
+<li>创建时需要传入<strong>当前使用的输入 (<code>inputs_used</code>)<strong>、</strong>代码 (<code>self.code</code>)</strong> 和 **函数名 (<code>functionname</code>)**。（代码和函数名有时可以帮助变异器做出更智能的变异决策，虽然简单变异可能用不上）。</li>
+<li>调用 <code>mutator_agent.mutate_inputs()</code>，这个方法会应用各种随机变异策略，生成一组<strong>新的</strong>输入。</li>
+<li>这个新生成的输入 <code>current_inputs</code> 将在<strong>下一轮</strong>循环中被用来测试代码。</li>
+<li>这个“执行 -&gt; 变异 -&gt; 执行 -&gt; 变异 -&gt; …”的过程不断重复，持续探索代码对各种输入的反应。</li>
+</ul>
+<p><strong>示例变异输入 (<code>current_inputs</code>):</strong></p>
+<p>基于上一轮的输入 <code>&#123;&#39;a&#39;: 1, &#39;b&#39;: 2&#125;</code>，<code>mutate_inputs()</code> 可能会生成：</p>
+<ul>
+<li><code>&#123;&#39;a&#39;: 1001, &#39;b&#39;: 2&#125;</code> (整数变异)</li>
+<li><code>&#123;&#39;a&#39;: 1, &#39;b&#39;: -998&#125;</code> (整数变异)</li>
+<li><code>&#123;&#39;a&#39;: &#39;hello&#39;, &#39;b&#39;: 2&#125;</code> (类型变异，可能在 <code>utils.py</code> 的 <code>mutate_value</code> 实现)</li>
+<li>…等等，每次调用都可能不同，因为它是随机的。</li>
+</ul>
+<p>通过 <code>TesterFuzzAgent</code> 提供起点，<code>InputMutatorAgent</code> 不断制造“惊喜”，AutoSafeCoder 就能源源不断地产生测试数据来考验代码了。</p>
+<h2 id="内部实现揭秘"><a href="#内部实现揭秘" class="headerlink" title="内部实现揭秘"></a>内部实现揭秘</h2><p>我们已经知道了模糊测试输入生成器（主要是变异器 <code>InputMutatorAgent</code>）的作用和用法，现在稍微深入一点，看看它是如何在内部进行“变异”的。这主要涉及到 <code>fuzz_agent.py</code> 文件和 <code>utils.py</code> 文件中的辅助函数。</p>
+<p><strong>非代码流程图解 (输入变异):</strong></p>
+<p>当框架调用 <code>InputMutatorAgent</code> 的 <code>mutate_inputs</code> 方法时，内部大致发生了什么？</p>
+<pre class="line-numbers language-mermaid" data-language="mermaid"><code class="language-mermaid"><span class="token keyword">sequenceDiagram</span>
+    <span class="token keyword">participant</span> MAS as 多智能体协作框架 <span class="token text string">(MultiAgentSystem)</span>
+    <span class="token keyword">participant</span> IMA as 输入变异智能体 <span class="token text string">(InputMutatorAgent)</span>
+    <span class="token keyword">participant</span> Utils as 工具函数 <span class="token text string">(utils.py)</span>
+
+    MAS<span class="token arrow operator">->></span>IMA<span class="token operator">:</span> 创建 InputMutatorAgent<span class="token text string">(当前输入, 代码, 函数名)</span>
+    MAS<span class="token arrow operator">->></span>IMA<span class="token operator">:</span> 调用 mutate_inputs<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    IMA<span class="token arrow operator">->></span>Utils<span class="token operator">:</span> 调用 fuzz_function<span class="token text string">(当前输入, 代码, 函数名)</span>
+    <span class="token keyword">Note right of</span> Utils<span class="token operator">:</span> fuzz_function 内部
+    Utils<span class="token arrow operator">->></span>Utils<span class="token operator">:</span> 调用 mutate_inputs<span class="token text string">(当前输入)</span>
+    Utils<span class="token arrow operator">->></span>Utils<span class="token operator">:</span> 对输入的每个值调用 mutate_value<span class="token text string">(值)</span>
+    <span class="token keyword">Note right of</span> Utils<span class="token operator">:</span> mutate_value 根据值的类型应用随机变异
+    Utils<span class="token arrow operator">-->></span>Utils<span class="token operator">:</span> 返回变异后的值
+    Utils<span class="token arrow operator">-->></span>Utils<span class="token operator">:</span> 组装成新的输入字典
+    Utils<span class="token arrow operator">-->></span>IMA<span class="token operator">:</span> 返回变异后的输入字典
+    IMA<span class="token arrow operator">-->></span>MAS<span class="token operator">:</span> 返回新的测试输入<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>图解说明:</strong></p>
+<ol>
+<li><strong>框架 (MAS)</strong> 创建 <code>InputMutatorAgent</code> (IMA) 实例，并调用其 <code>mutate_inputs</code> 方法。</li>
+<li><strong>输入变异智能体 (IMA)</strong> 调用 <code>utils.py</code> 中的 <code>fuzz_function</code> 函数。（根据 <code>fuzz_agent.py</code> 的代码，<code>mutate_inputs</code> 直接调用了 <code>fuzz_function</code>）。</li>
+<li><strong><code>fuzz_function</code></strong> 接着调用 <code>utils.py</code> 中的另一个 <code>mutate_inputs</code> 辅助函数（注意，这里有两个同名但可能功能不同的 <code>mutate_inputs</code>，一个是 IMA 的方法，一个是 <code>utils.py</code> 的辅助函数）。</li>
+<li><strong><code>utils.py</code> 的 <code>mutate_inputs</code> 函数</strong> 遍历输入字典中的每一个键值对。</li>
+<li>对于<strong>每一个值</strong>，它调用 <code>utils.py</code> 中的 <code>mutate_value</code> 函数。</li>
+<li><strong><code>mutate_value</code> 函数</strong> 是真正执行变异的地方。它会检查值的类型（是整数、字符串、列表还是其他？），然后应用适合该类型的<strong>随机</strong>修改策略（比如给整数加减一个随机数，随机改变字符串中的字符）。</li>
+<li><code>mutate_value</code> 返回变异后的值。</li>
+<li><code>utils.py</code> 的 <code>mutate_inputs</code> 将所有变异后的值重新组装成一个新的输入字典。</li>
+<li>这个新的、变异后的输入字典最终被返回给框架，用于下一轮测试。</li>
+</ol>
+<p><strong>代码层面的深入了解:</strong></p>
+<p>让我们看看 <code>fuzz_agent.py</code> 和 <code>utils.py</code> 中的关键代码。</p>
+<p><strong>1. 输入变异智能体 (<code>InputMutatorAgent</code>)</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># fuzz_agent.py (片段)</span>
+<span class="token keyword">from</span> utils <span class="token keyword">import</span> fuzz_function <span class="token comment"># 导入执行变异的函数</span>
+
+<span class="token keyword">class</span> <span class="token class-name">InputMutatorAgent</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> code<span class="token punctuation">,</span> funname<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 存储当前的输入、代码和函数名</span>
+        self<span class="token punctuation">.</span>inputs <span class="token operator">=</span> inputs
+        self<span class="token punctuation">.</span>code <span class="token operator">=</span> code
+        self<span class="token punctuation">.</span>funname <span class="token operator">=</span> funname
+
+    <span class="token keyword">def</span> <span class="token function">mutate_inputs</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 调用 utils.py 中的 fuzz_function 来执行变异</span>
+        mutated_inputs <span class="token operator">=</span> fuzz_function<span class="token punctuation">(</span>self<span class="token punctuation">.</span>inputs<span class="token punctuation">,</span> self<span class="token punctuation">.</span>code<span class="token punctuation">,</span> self<span class="token punctuation">.</span>funname<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> mutated_inputs <span class="token comment"># 返回变异后的输入</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li><code>__init__</code> 方法接收当前的输入 <code>inputs</code>、代码 <code>code</code> 和函数名 <code>funname</code> 并存储起来。</li>
+<li><code>mutate_inputs</code> 方法的核心就是调用了 <code>utils.py</code> 中的 <code>fuzz_function</code>。它将存储的输入、代码和函数名传递给这个函数，并直接返回该函数的结果（即变异后的输入）。<code>InputMutatorAgent</code> 本身更像是一个调用入口，实际的变异逻辑在 <code>utils.py</code> 中。</li>
+</ul>
+<p><strong>2. 变异的核心逻辑 (<code>utils.py</code> 中的 <code>fuzz_function</code>, <code>mutate_inputs</code>, <code>mutate_value</code>)</strong></p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># utils.py (片段 - 简化)</span>
+<span class="token keyword">import</span> random
+<span class="token keyword">import</span> string
+<span class="token keyword">from</span> copy <span class="token keyword">import</span> deepcopy
+
+<span class="token comment"># 这个函数是 InputMutatorAgent 调用的入口</span>
+<span class="token keyword">def</span> <span class="token function">fuzz_function</span><span class="token punctuation">(</span>inputs<span class="token punctuation">,</span> code<span class="token punctuation">,</span> funname<span class="token punctuation">,</span> num_tests<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+     <span class="token comment"># 提取并变异输入 (这里的实现直接调用了下面的 mutate_inputs)</span>
+    <span class="token keyword">return</span> mutate_inputs<span class="token punctuation">(</span>inputs<span class="token punctuation">)</span>
+
+<span class="token comment"># 这个辅助函数遍历输入字典并调用 mutate_value</span>
+<span class="token keyword">def</span> <span class="token function">mutate_inputs</span><span class="token punctuation">(</span>inputs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    mutated_inputs <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token comment"># 创建输入的深拷贝以避免修改原始输入</span>
+        inputs_copy <span class="token operator">=</span> deepcopy<span class="token punctuation">(</span>inputs<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token keyword">in</span> inputs_copy<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment"># 对每个值调用 mutate_value 进行变异</span>
+            mutated_inputs<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> mutate_value<span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+    <span class="token keyword">except</span> AttributeError<span class="token punctuation">:</span>
+        <span class="token comment"># 处理输入不是字典的情况 (简化处理)</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"错误：输入不是字典格式。"</span><span class="token punctuation">)</span>
+        <span class="token comment"># 尝试将其视为列表处理 (示例性代码)</span>
+        <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>inputs<span class="token punctuation">,</span> <span class="token builtin">list</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            inputs_dict <span class="token operator">=</span> <span class="token punctuation">&#123;</span>i<span class="token punctuation">:</span> item <span class="token keyword">for</span> i<span class="token punctuation">,</span> item <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>inputs<span class="token punctuation">)</span><span class="token punctuation">&#125;</span>
+            inputs_copy <span class="token operator">=</span> deepcopy<span class="token punctuation">(</span>inputs_dict<span class="token punctuation">)</span>
+            <span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token keyword">in</span> inputs_copy<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                mutated_inputs<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> mutate_value<span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> mutated_inputs
+
+<span class="token comment"># 这个函数根据值的类型应用具体的随机变异策略</span>
+<span class="token keyword">def</span> <span class="token function">mutate_value</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""根据值的类型变异单个值。"""</span>
+    value_copy <span class="token operator">=</span> deepcopy<span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token comment"># 操作副本</span>
+
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">bool</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 50% 的概率翻转布尔值</span>
+        <span class="token keyword">return</span> <span class="token keyword">not</span> value_copy <span class="token keyword">if</span> random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.5</span> <span class="token keyword">else</span> value_copy
+    <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">int</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 整数变异：加上一个 [-1000, 1000] 范围内的随机数</span>
+        <span class="token keyword">return</span> value_copy <span class="token operator">+</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1000</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">float</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 浮点数变异：加上一个 [-1000.0, 1000.0] 范围内的随机浮点数</span>
+        <span class="token keyword">return</span> value_copy <span class="token operator">+</span> random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1000.0</span><span class="token punctuation">,</span> <span class="token number">1000.0</span><span class="token punctuation">)</span>
+    <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 字符串变异：随机选择打乱、添加或删除字符</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> value_copy<span class="token punctuation">:</span> <span class="token comment"># 如果是空字符串，生成随机字符串</span>
+             <span class="token keyword">return</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>random<span class="token punctuation">.</span>choices<span class="token punctuation">(</span>string<span class="token punctuation">.</span>ascii_letters <span class="token operator">+</span> string<span class="token punctuation">.</span>digits<span class="token punctuation">,</span> k<span class="token operator">=</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        mutation_type <span class="token operator">=</span> random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'shuffle'</span><span class="token punctuation">,</span> <span class="token string">'add'</span><span class="token punctuation">,</span> <span class="token string">'remove'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        str_len <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> mutation_type <span class="token operator">==</span> <span class="token string">'shuffle'</span> <span class="token keyword">and</span> str_len <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">''</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>random<span class="token punctuation">.</span>sample<span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> str_len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">elif</span> mutation_type <span class="token operator">==</span> <span class="token string">'add'</span><span class="token punctuation">:</span>
+            pos <span class="token operator">=</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> str_len<span class="token punctuation">)</span>
+            char <span class="token operator">=</span> random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>string<span class="token punctuation">.</span>ascii_letters <span class="token operator">+</span> string<span class="token punctuation">.</span>digits<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> value_copy<span class="token punctuation">[</span><span class="token punctuation">:</span>pos<span class="token punctuation">]</span> <span class="token operator">+</span> char <span class="token operator">+</span> value_copy<span class="token punctuation">[</span>pos<span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">elif</span> mutation_type <span class="token operator">==</span> <span class="token string">'remove'</span> <span class="token keyword">and</span> str_len <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+            pos <span class="token operator">=</span> random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> str_len <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> value_copy<span class="token punctuation">[</span><span class="token punctuation">:</span>pos<span class="token punctuation">]</span> <span class="token operator">+</span> value_copy<span class="token punctuation">[</span>pos<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span> <span class="token comment"># 默认返回原值或简单处理</span>
+            <span class="token keyword">return</span> value_copy
+    <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">list</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment"># 列表变异：对列表中的每个元素递归调用 mutate_value</span>
+        <span class="token comment"># (简化：可能增加/删除元素，或只变异现有元素)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>mutate_value<span class="token punctuation">(</span>element<span class="token punctuation">)</span> <span class="token keyword">for</span> element <span class="token keyword">in</span> value_copy<span class="token punctuation">]</span>
+    <span class="token keyword">elif</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">,</span> <span class="token builtin">dict</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+         <span class="token comment"># 字典变异：(简化) 随机变异某个值</span>
+         <span class="token keyword">if</span> value_copy<span class="token punctuation">:</span>
+             key_to_mutate <span class="token operator">=</span> random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>value_copy<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+             value_copy<span class="token punctuation">[</span>key_to_mutate<span class="token punctuation">]</span> <span class="token operator">=</span> mutate_value<span class="token punctuation">(</span>value_copy<span class="token punctuation">[</span>key_to_mutate<span class="token punctuation">]</span><span class="token punctuation">)</span>
+         <span class="token keyword">return</span> value_copy
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token comment"># 对于不支持的类型，返回原始值的副本</span>
+        <span class="token keyword">return</span> value_copy<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>代码解释:</strong></p>
+<ul>
+<li><code>fuzz_function</code> 目前的实现比较简单，直接调用了 <code>mutate_inputs</code> 辅助函数。</li>
+<li><code>mutate_inputs</code> 辅助函数负责遍历输入字典的每一项。它使用了 <code>deepcopy</code> 来确保不会意外修改原始的输入对象。对于字典中的每个 <code>value</code>，它调用 <code>mutate_value(value)</code>。</li>
+<li><code>mutate_value</code> 是核心的变异逻辑所在地。它使用 <code>isinstance</code> 来判断值的类型，并根据类型执行不同的随机操作：<ul>
+<li><strong>布尔值</strong>: 随机翻转。</li>
+<li><strong>整数</strong>: 加上一个随机整数。</li>
+<li><strong>浮点数</strong>: 加上一个随机浮点数。</li>
+<li><strong>字符串</strong>: 随机选择一种操作（打乱顺序、添加随机字符、删除随机字符）。</li>
+<li><strong>列表</strong>: 递归地对列表中的每个元素调用 <code>mutate_value</code>（更复杂的策略可能包括增删元素、改变顺序等）。</li>
+<li><strong>字典</strong>: 递归地变异字典中的值或键（这里简化为只变异一个随机选择的值）。</li>
+</ul>
+</li>
+<li><code>deepcopy</code> 的使用很重要，确保了变异操作不会影响到原始数据结构，特别是对于列表和字典这样的可变对象。</li>
+<li><strong>随机性</strong>是关键。每次调用 <code>mutate_value</code>（以及内部的 <code>random</code> 函数）都会产生不同的结果，这就是模糊测试能够探索大量不同输入的原因。</li>
+</ul>
+<p>通过这种基于规则和随机性的变异，<code>InputMutatorAgent</code> (借助 <code>utils.py</code> 中的函数)能源源不断地生成新的、可能引发问题的测试输入。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本章中，我们认识了 AutoSafeCoder 中负责制造“惊喜”的**模糊测试输入生成器 (Fuzzing Input Generator)**。我们学到了：</p>
+<ul>
+<li>它的主要目标是<strong>生成大量多样化的、可能导致异常的输入数据</strong>，用于动态测试代码的健壮性和安全性。</li>
+<li>它像一个“捣蛋工匠”，从初始输入（种子）开始，通过各种<strong>随机或半随机的变异操作</strong>（改变数值、类型、格式、结构等）来制造新的测试用例。</li>
+<li>在 AutoSafeCoder 中，这个过程分为两步：<ul>
+<li><code>TesterFuzzAgent</code> 负责生成<strong>初始种子输入</strong>。</li>
+<li><code>InputMutatorAgent</code> (利用 <code>utils.py</code> 中的变异函数) 负责在模糊测试循环中<strong>对现有输入进行变异</strong>，生成后续的测试输入。</li>
+</ul>
+</li>
+<li>我们了解了框架 (<code>main.py</code>) 如何调用这两个智能体来驱动输入生成过程。</li>
+<li>我们通过代码示例（特别是 <code>utils.py</code> 中的 <code>mutate_value</code>）了解了输入变异的基本原理：根据数据类型应用不同的随机修改策略。</li>
+</ul>
+<p>模糊测试输入生成器为我们准备好了测试的“弹药”。但是，光有弹药还不行，我们还需要一个“发射器”来把这些弹药（测试输入）打向我们的目标（代码），并观察结果。</p>
+<p><strong>下一章预告:</strong> <a href="05_%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C%E5%99%A8__fuzzing_executor__.md">第 5 章：模糊测试执行器 (Fuzzing Executor)</a> - 我们将探索负责实际使用这些生成的输入来运行代码，并监控其行为的智能体。</p>
+<hr>
+<p>Generated by <a target="_blank" rel="noopener" href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2025/04/27/06_%E5%AE%89%E5%85%A8%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83__secure_code_execution_environment__/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>AutoSafeCoder-Secure Code Execution Environment</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2025/04/27/03_%E9%9D%99%E6%80%81%E5%AE%89%E5%85%A8%E5%88%86%E6%9E%90%E5%99%A8__static_security_analyzer__/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>AutoSafeCoder-Static Security Analyzer</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		
+<div class="footer">
+	<div class="Copyright">
+		©2025 By ChenSir. 主题：<a
+			style="text-decoration: none;display: contents; color: #898F9F;"
+			target="_blank" rel="noopener" href="https://github.com/qiaobug/hexo-theme-quiet">Quiet</a>
+	</div>
+	<div class="contact">
+		
+		<a target="_blank" rel="noopener" href="https://github.com/Ch3nSir">
+			<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+		</a>
+		
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+
+
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+<script>
+	console.log('\n %c Hexo-Quiet 主题 %c https://github.com/QiaoBug/hexo-theme-quiet \n', 'color: #fadfa3; background: #030307; padding:5px 0;', 'background: #fadfa3; padding:5px 0;')
+</script>
+	</body>
+</html>
+
